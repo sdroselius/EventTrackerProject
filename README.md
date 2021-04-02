@@ -9,4 +9,4 @@ TODO: LINK TO DEPLOYED APP, LOGIN INFO IF NEEDED
 
 | HTTP Method | Resource URI | Request Body | Returns |
 |-------------|--------------|--------------|---------|
-| GET         | `api/lemurs` |              | List<Lemur>|
+| GET         | `api/lemurs` |              | List%lt;Lemur%gt;|
