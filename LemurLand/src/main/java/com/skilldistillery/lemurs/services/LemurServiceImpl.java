@@ -19,8 +19,7 @@ public class LemurServiceImpl implements LemurService {
 
 	@Override
 	public List<Lemur> allLemurs() {
-		// TODO Auto-generated method stub
-		return null;
+		return repo.findAll();
 	}
 
 	@Override
