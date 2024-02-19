@@ -72,10 +72,10 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 START TRANSACTION;
 USE `readinglistdb`;
 INSERT INTO `author` (`id`, `full_name`, `image_url`) VALUES (1, '- Author Unknown -', NULL);
-INSERT INTO `author` (`id`, `full_name`, `image_url`) VALUES (2, 'Herman Melville', NULL);
-INSERT INTO `author` (`id`, `full_name`, `image_url`) VALUES (3, 'Douglas R. Hofstater', NULL);
-INSERT INTO `author` (`id`, `full_name`, `image_url`) VALUES (4, 'Patrick O\'Brian', NULL);
-INSERT INTO `author` (`id`, `full_name`, `image_url`) VALUES (5, 'John LeCarre', NULL);
+INSERT INTO `author` (`id`, `full_name`, `image_url`) VALUES (2, 'Herman Melville', 'https://upload.wikimedia.org/wikipedia/commons/1/1d/Herman_Melville_1860.jpg');
+INSERT INTO `author` (`id`, `full_name`, `image_url`) VALUES (3, 'Douglas R. Hofstater', 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Hofstadter2002.jpg/398px-Hofstadter2002.jpg');
+INSERT INTO `author` (`id`, `full_name`, `image_url`) VALUES (4, 'Patrick O\'Brian', 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Patrick45.jpg/440px-Patrick45.jpg');
+INSERT INTO `author` (`id`, `full_name`, `image_url`) VALUES (5, 'John LeCarre', 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/John_le_Carre.jpg/440px-John_le_Carre.jpg');
 
 COMMIT;
 
