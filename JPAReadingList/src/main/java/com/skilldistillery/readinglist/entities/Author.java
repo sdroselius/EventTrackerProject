@@ -3,6 +3,8 @@ package com.skilldistillery.readinglist.entities;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,6 +22,7 @@ public class Author {
 	@Column(name = "full_name")
 	private String fullName;
 	
+	@JsonIgnoreProperties("author")
 	@OneToMany(mappedBy = "author")
 	private List<Book> books;
 
