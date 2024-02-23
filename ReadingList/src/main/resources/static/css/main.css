@@ -2,3 +2,17 @@
 body {
 	background-color: antiquewhite;
 }
+
+.coverImageThumbnail {
+	height: 30px;
+}
+
+.coverImage {
+	width: 50%;
+	float: left;
+	margin-right: 5px;
+}
+
+.clear {
+	clear: both;
+}
