@@ -62,7 +62,6 @@ public class BookServiceImpl implements BookService {
 		if (bookOpt.isPresent()) {
 			existing = bookOpt.get();
 			existing.setDescription(book.getDescription());
-			existing.setEnabled(book.isEnabled());
 			existing.setLastFinished(book.getLastFinished());
 			existing.setPages(book.getPages());
 			existing.setTitle(book.getTitle());
@@ -79,7 +78,6 @@ public class BookServiceImpl implements BookService {
 		Book existing = bookRepo.getByIdAndEnabledTrue(bookId);
 		if (existing != null) {
 			existing.setDescription(book.getDescription());
-			existing.setEnabled(book.isEnabled());
 			existing.setLastFinished(book.getLastFinished());
 			existing.setPages(book.getPages());
 			existing.setTitle(book.getTitle());
