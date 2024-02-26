@@ -77,7 +77,7 @@ public class BookController {
 	}
 	
 	@DeleteMapping("books/{bookId}")
-	public void deleteBook(@PathVariable Integer bookId, HttpServletResponse res) {
+	public void deleteBook(@PathVariable("bookId") Integer bookId, HttpServletResponse res) {
 		try {
 			if (bookService.deleteById(bookId)) {
 				res.setStatus(204);

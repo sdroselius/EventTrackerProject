@@ -17,6 +17,21 @@ window.addEventListener('load', function(evt) {
 		showAddAuthor();
 	});
 
+	addBookAddAuthorForm.cancelAddAuthor.addEventListener('click', function(evt) {
+		evt.preventDefault();
+		hideAddAuthor();
+	});
+
+	addBookAddAuthorForm.addAuthor.addEventListener('click', function(evt) {
+		evt.preventDefault();
+		let newAuthor = {
+			fullName: addBookAddAuthorForm.fullName.value,
+			imageUrl: addBookAddAuthorForm.imageUrl.value
+		};
+		saveAuthor(newAuthor);
+		hideAddAuthor();
+	});
+
 	addBookForm.saveNewBook.addEventListener('click', function(evt) {
 		evt.preventDefault();
 		let newBook = {
@@ -27,12 +42,12 @@ window.addEventListener('load', function(evt) {
 			lastFinished: addBookForm.lastFinished.value,
 			coverImageUrl: addBookForm.coverImageUrl.value,
 			author: {
-				id: editBookForm.author.value,
+				id: addBookForm.author.value,
 			}
 		};
 		saveBook(newBook);
 	});
-	
+
 	editBookForm.cancelEdit.addEventListener('click', function(evt) {
 		evt.preventDefault();
 		showDetails();
@@ -53,13 +68,13 @@ window.addEventListener('load', function(evt) {
 		};
 		updateBook(editedBook);
 	});
-	
+
 	let goToAddButton = document.getElementById('goToAddButton');
-	goToAddButton.addEventListener('click',function(e){
+	goToAddButton.addEventListener('click', function(e) {
 		e.preventDefault();
 		showAddForm();
 	});
-	
+
 
 });
 
@@ -102,7 +117,7 @@ function displayAuthors(authors) {
 	let addList = addBookForm.author;
 	editList.textContent = '';
 	addList.textContent = '';
-	authors.forEach((author,i) => {
+	authors.forEach((author, i) => {
 		let optE = document.createElement('option');
 		let optA = document.createElement('option');
 		optE.value = optA.value = author.id;
@@ -125,7 +140,12 @@ function displayBookList(books) {
 			let td = document.createElement('td');
 			//			td.textContent = book.id;
 			let img = document.createElement('img');
-			img.src = book.coverImageUrl;
+			if (book.coverImageUrl) {
+				img.src = book.coverImageUrl;
+			}
+			else {
+				img.src = 'images/book.jpg';
+			}
 			img.classList.add('coverImageThumbnail');
 			td.appendChild(img);
 			tr.appendChild(td);
@@ -161,6 +181,20 @@ function displayBookList(books) {
 function deleteBook(bookId) {
 	//FIXME
 	console.log('Deleting book ' + bookId);
+	let xhr = new XMLHttpRequest();
+	xhr.open('DELETE', 'api/books/' + bookId);
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === xhr.DONE) {
+			if (xhr.status === 200 || xhr.status === 204) {
+				loadAllBooks();
+				loadAuthors();
+			}
+			else {
+				// TODO
+			}
+		}
+	};
+	xhr.send();
 }
 function getBook(bookId) {
 	if (!bookId || isNaN(bookId)) {
@@ -193,6 +227,12 @@ function displayBook(book) {
 	bookDiv.appendChild(author);
 	let cover = document.createElement('img');
 	cover.src = book.coverImageUrl;
+	if (book.coverImageUrl) {
+		cover.src = book.coverImageUrl;
+	}
+	else {
+		cover.src = 'images/book.jpg';
+	}
 	cover.alt = 'Cover art for ' + book.title;
 	cover.classList.add('coverImage');
 	bookDiv.appendChild(cover);
@@ -242,25 +282,28 @@ function goToEditForm(book) {
 	editBookForm.author.value = book.author.id;
 	showEditForm();
 }
+
 function updateBook(editedBook) {
 	console.log("Updating book");
 	console.log(editedBook);
 	let xhr = new XMLHttpRequest();
 	xhr.open('PUT', 'api/books/' + editedBook.id);
-	xhr.onreadystatechange = function(){
+	xhr.onreadystatechange = function() {
 		if (xhr.readyState === xhr.DONE) {
 			if (xhr.status === 200) {
 				let book = JSON.parse(xhr.responseText);
 				getBook(editedBook.id);
+				loadAllBooks();
 			}
 			else {
 				// TODO
 			}
 		}
 	};
-	xhr.setRequestHeader('Content-type','application/json');
+	xhr.setRequestHeader('Content-type', 'application/json');
 	xhr.send(JSON.stringify(editedBook));
 }
+
 function showTable() {
 	let list = document.getElementById('bookListDiv');
 	let details = document.getElementById('bookDetailDiv');
@@ -315,4 +358,43 @@ function hideAddAuthor() {
 	div.style.display = 'none';
 }
 
+function saveBook(newBook) {
+	console.log("Saving book");
+	console.log(newBook);
+	let xhr = new XMLHttpRequest();
+	xhr.open('POST', 'api/books');
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === xhr.DONE) {
+			if (xhr.status === 200 || xhr.status === 201) {
+				let book = JSON.parse(xhr.responseText);
+				getBook(book.id);
+				loadAllBooks();
+			}
+			else {
+				// TODO
+			}
+		}
+	};
+	xhr.setRequestHeader('Content-type', 'application/json');
+	xhr.send(JSON.stringify(newBook));
+}
 
+function saveAuthor(newAuthor) {
+	console.log("Saving Author");
+	console.log(newAuthor);
+	let xhr = new XMLHttpRequest();
+	xhr.open('POST', 'api/authors');
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === xhr.DONE) {
+			if (xhr.status === 200 || xhr.status === 201) {
+				let author = JSON.parse(xhr.responseText);
+				loadAuthors();
+			}
+			else {
+				// TODO
+			}
+		}
+	};
+	xhr.setRequestHeader('Content-type', 'application/json');
+	xhr.send(JSON.stringify(newAuthor));
+}

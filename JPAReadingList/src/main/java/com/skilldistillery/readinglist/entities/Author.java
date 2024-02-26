@@ -22,6 +22,9 @@ public class Author {
 	@Column(name = "full_name")
 	private String fullName;
 	
+	@Column(name = "image_url")
+	private String imageUrl;
+	
 	@JsonIgnoreProperties("author")
 	@OneToMany(mappedBy = "author")
 	private List<Book> books;
@@ -52,6 +55,14 @@ public class Author {
 
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 	@Override

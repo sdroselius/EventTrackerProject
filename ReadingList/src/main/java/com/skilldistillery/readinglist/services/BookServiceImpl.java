@@ -95,6 +95,7 @@ public class BookServiceImpl implements BookService {
 		Book book = bookRepo.getByIdAndEnabledTrue(bookId);
 		if (book != null) {
 			book.setEnabled(false);
+			bookRepo.saveAndFlush(book);
 			deleted = true;
 		}
 		return deleted;
