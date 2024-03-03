@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.skilldistillery.readinglist.entities.Author;
 import com.skilldistillery.readinglist.entities.Book;
 import com.skilldistillery.readinglist.services.AuthorService;
 import com.skilldistillery.readinglist.services.BookService;
@@ -89,6 +90,32 @@ public class BookController {
 			e.printStackTrace();
 			res.setStatus(400);
 		}
+	}
+	
+	@PostMapping("books/{bookId}/authors/{authorId}")
+	public List<Author> addAuthorToBook(
+			@PathVariable("bookId") Integer bookId,
+			@PathVariable("authorId") Integer authorId,
+			HttpServletResponse res
+	) {
+		List<Author> authors = bookService.addAuthor(bookId, authorId);
+		if (authors == null) {
+			res.setStatus(404);
+		}
+		return authors;
+	}
+	
+	@DeleteMapping("books/{bookId}/authors/{authorId}")
+	public List<Author> removeAuthorFromBook(
+			@PathVariable("bookId") Integer bookId,
+			@PathVariable("authorId") Integer authorId,
+			HttpServletResponse res
+			) {
+		List<Author> authors = bookService.removeAuthor(bookId, authorId);
+		if (authors == null) {
+			res.setStatus(404);
+		}
+		return authors;
 	}
 	
 }

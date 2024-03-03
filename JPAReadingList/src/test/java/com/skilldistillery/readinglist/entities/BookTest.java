@@ -2,6 +2,7 @@ package com.skilldistillery.readinglist.entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -50,8 +51,8 @@ class BookTest {
 	@Test
 	void test_Book_Author_ManyToOne_mapping() {
 		assertNotNull(book);
-		assertNotNull(book.getAuthor());
-		assertEquals(2, book.getAuthor().getId());
+		assertNotNull(book.getAuthors());
+		assertTrue(book.getAuthors().size()> 0);
 	}
 	
 }

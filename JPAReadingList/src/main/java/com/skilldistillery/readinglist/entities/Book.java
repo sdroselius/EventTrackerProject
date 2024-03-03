@@ -2,10 +2,14 @@ package com.skilldistillery.readinglist.entities;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,8 +17,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 
 @Entity
 public class Book {
@@ -39,9 +44,15 @@ public class Book {
 	@Column(name = "last_update")
 	private LocalDateTime lastUpdate;
 	
-	@ManyToOne
-	@JoinColumn(name = "author_id")
-	private Author author;
+	@JsonIgnoreProperties({"books"})
+	@ManyToMany
+	@JoinTable(
+			name = "book_author",
+			joinColumns = @JoinColumn(name = "book_id"),
+			inverseJoinColumns = @JoinColumn(name = "author_id")
+	)	
+	private List<Author> authors;
+	//TODO add/remove
 
 	public Book() {
 		super();
@@ -119,12 +130,27 @@ public class Book {
 		this.lastUpdate = lastUpdate;
 	}
 
-	public Author getAuthor() {
-		return author;
+	public List<Author> getAuthors() {
+		return authors;
+	}
+	
+	public void addAuthor(Author author) {
+		if (authors == null) { authors = new ArrayList<>(); }
+		if (!authors.contains(author)) {
+			authors.add(author);
+			author.addBook(this);
+		}
 	}
 
-	public void setAuthor(Author author) {
-		this.author = author;
+	public void removeAuthor(Author author) {
+		if (authors != null && authors.contains(author)) {
+			authors.remove(author);
+			author.removeBook(this);
+		}
+	}
+	
+	public void setAuthors(List<Author> authors) {
+		this.authors = authors;
 	}
 
 	@Override

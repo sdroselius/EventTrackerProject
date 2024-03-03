@@ -2,6 +2,7 @@ package com.skilldistillery.readinglist.services;
 
 import java.util.List;
 
+import com.skilldistillery.readinglist.entities.Author;
 import com.skilldistillery.readinglist.entities.Book;
 
 public interface BookService {
@@ -14,5 +15,7 @@ public interface BookService {
 	Book update(int bookId, Book book);
 	Book updateEnabled(int bookId, Book book);
 	boolean deleteById(int bookId);
+	List<Author> addAuthor(int bookId, int authorId);
+	List<Author> removeAuthor(int bookId, int authorId);
 
 }

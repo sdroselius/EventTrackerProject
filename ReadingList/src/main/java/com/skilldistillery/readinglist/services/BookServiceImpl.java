@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.skilldistillery.readinglist.entities.Author;
 import com.skilldistillery.readinglist.entities.Book;
 import com.skilldistillery.readinglist.repositories.AuthorRepository;
 import com.skilldistillery.readinglist.repositories.BookRepository;
@@ -48,9 +49,6 @@ public class BookServiceImpl implements BookService {
 	
 	@Override
 	public Book create(Book book) {
-		if (book.getAuthor() == null) {
-			book.setAuthor(authorRepo.searchById(DEFAULT_AUTHOR_ID));
-		}
 		book.setEnabled(true);
 		return bookRepo.saveAndFlush(book);
 	}
@@ -65,9 +63,6 @@ public class BookServiceImpl implements BookService {
 			existing.setLastFinished(book.getLastFinished());
 			existing.setPages(book.getPages());
 			existing.setTitle(book.getTitle());
-			if (book.getAuthor() != null) {
-				existing.setAuthor(book.getAuthor());
-			}
 			bookRepo.saveAndFlush(existing);
 		}
 		return existing;
@@ -81,9 +76,6 @@ public class BookServiceImpl implements BookService {
 			existing.setLastFinished(book.getLastFinished());
 			existing.setPages(book.getPages());
 			existing.setTitle(book.getTitle());
-			if (book.getAuthor() != null) {
-				existing.setAuthor(book.getAuthor());
-			}
 			bookRepo.saveAndFlush(existing);
 		}
 		return existing;
@@ -99,6 +91,28 @@ public class BookServiceImpl implements BookService {
 			deleted = true;
 		}
 		return deleted;
+	}
+
+	@Override
+	public List<Author> addAuthor(int bookId, int authorId) {
+		Book book = bookRepo.searchById(bookId);
+		Author author = authorRepo.searchById(authorId);
+		if (book != null && author != null) {
+			book.addAuthor(author);
+			return authorRepo.findByBooksId(bookId);
+		}
+		return null;
+	}
+
+	@Override
+	public List<Author> removeAuthor(int bookId, int authorId) {
+		Book book = bookRepo.searchById(bookId);
+		Author author = authorRepo.searchById(authorId);
+		if (book != null && author != null) {
+			book.removeAuthor(author);
+			return authorRepo.findByBooksId(bookId);
+		}
+		return null;
 	}
 
 

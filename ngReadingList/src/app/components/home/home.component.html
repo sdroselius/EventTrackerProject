@@ -1,0 +1,65 @@
+<h1>
+  My Books <span class="badge bg-info">{{ getBookCount() }}</span>
+</h1>
+  <button class="btn btn-outline-info" (click)="goToAddBook()">
+    Add a Book
+  </button>
+
+<div id="bookList" *ngIf="!selectedBook && !addingBook">
+  <div class="row">
+    <div
+      class="col-sm-3 cardCol"
+      *ngFor="
+        let book of books
+          | title : titleParam
+          | filter : filterType : filterParam
+          | sort : sortParam;
+        let i = index
+      "
+    >
+      <div class="card">
+        <img
+          [src]="book.coverImageUrl"
+          class="card-img-top bookCardThumb"
+          alt="Cover for {{ book.title }}"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ book.title }}</h5>
+          <div class="card-text">
+            <p *ngFor="let author of book.authors">
+              {{ author.fullName }}
+            </p>
+          </div>
+          <a (click)="displayBook(book)" class="btn btn-primary">Details</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="bookDetails" *ngIf="selectedBook && ! addingBook">
+  <h1>
+    {{ selectedBook.title }}
+    <button class="btn btn-outline-info" (click)="displayList()">Back</button>
+  </h1>
+  <h3 *ngFor="let author of selectedBook.authors">{{ author.fullName }}</h3>
+  <img
+    [src]="selectedBook.coverImageUrl"
+    alt="Cover art for {{ selectedBook.title }}"
+    class="bookDetailCover"
+  />
+  <blockquote>{{ selectedBook.lastFinished }}</blockquote>
+</div>
+
+<div id="bookAdd" *ngIf="addingBook">
+  <h1>
+    Add a new Book
+    <button class="btn btn-info" (click)="displayList()">Back</button>
+  </h1>
+  <form>
+    <div class="row">
+      <label class="form-label col-auto" for="title">Title</label>
+      <input class="form-control col" type="text" name="title" />
+    </div>
+  </form>
+</div>

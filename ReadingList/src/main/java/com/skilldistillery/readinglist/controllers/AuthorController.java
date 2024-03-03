@@ -16,9 +16,9 @@ import com.skilldistillery.readinglist.services.AuthorService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@CrossOrigin({"*", "http://localhost/"})
 @RestController
 @RequestMapping("api")
+@CrossOrigin({"*", "http://localhost/"})
 public class AuthorController {
 
 	@Autowired

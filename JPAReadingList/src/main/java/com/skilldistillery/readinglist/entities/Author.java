@@ -1,5 +1,6 @@
 package com.skilldistillery.readinglist.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,7 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Author {
@@ -25,17 +26,10 @@ public class Author {
 	@Column(name = "image_url")
 	private String imageUrl;
 	
-	@JsonIgnoreProperties("author")
-	@OneToMany(mappedBy = "author")
+	@JsonIgnoreProperties("authors")
+	@ManyToMany(mappedBy = "authors")
 	private List<Book> books;
 
-	public List<Book> getBooks() {
-		return books;
-	}
-
-	public void setBooks(List<Book> books) {
-		this.books = books;
-	}
 
 	public Author() {
 		super();
@@ -65,6 +59,29 @@ public class Author {
 		this.imageUrl = imageUrl;
 	}
 
+	public List<Book> getBooks() {
+		return books;
+	}
+	
+	public void setBooks(List<Book> books) {
+		this.books = books;
+	}
+	
+	public void addBook(Book book) {
+		if (books == null) { books = new ArrayList<>(); }
+		if (! books.contains(book)) {
+			books.add(book);
+			book.addAuthor(this);
+		}
+	}
+	
+	public void removeBook(Book book) {
+		if (books != null && books.contains(book)) {
+			books.remove(book);
+			book.removeAuthor(this);
+		}
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
