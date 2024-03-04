@@ -13,8 +13,7 @@ export class SortPipe implements PipeTransform {
     let sorted: Book[] = [...books];
     sorted.sort( (a,b) => {
       if (sortParam === 'author') {
-        return 0;
-        // return a.author.fullName.localeCompare(b.author.fullName);
+        return a.authors[0].fullName.localeCompare(b.authors[0].fullName);
       }
       else {
         let result: number = 0;

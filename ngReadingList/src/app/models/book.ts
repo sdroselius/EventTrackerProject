@@ -4,6 +4,7 @@ export class Book {
 
   id: number;
   title: string;
+  description: string;
   pages: number;
   coverImageUrl: string;
   lastFinished: string;
@@ -12,6 +13,7 @@ export class Book {
   constructor(
     id: number = 0,
     title: string = '',
+    description: string = '',
     pages: number = 0,
     coverImageUrl: string = '',
     lastFinished: string = '',
@@ -19,6 +21,7 @@ export class Book {
   )  {
     this.id = id;
     this.title = title;
+    this.description = description;
     this.pages = pages;
     this.coverImageUrl = coverImageUrl;
     this.lastFinished = lastFinished;

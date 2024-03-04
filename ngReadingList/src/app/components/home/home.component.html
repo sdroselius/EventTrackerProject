@@ -6,17 +6,35 @@
   </button>
 
 <div id="bookList" *ngIf="!selectedBook && !addingBook">
+  <div id="sortAndFilter" class="row">
+    <label for="sort" class="form-label col-auto">Sort By</label>
+    <select name="sort" [(ngModel)]="sortParam" class="form-select col">
+      <option value="author">Author</option>
+      <option value="title">Title</option>
+      <option value="pages">Pages</option>
+      <option value="lastFinished">Date Last Finished</option>
+    </select>
+
+    <label for="authors" class="col-auto">Author</label>
+    <select name="authors" [(ngModel)]="authorId" class="form-select col">
+      <option [value]="null"> -- All Authors -- </option>
+      <option *ngFor="let author of authors" value="{{author.id}}">{{author.fullName}}</option>
+    </select>
+
+
+  </div>
   <div class="row">
     <div
       class="col-sm-3 cardCol"
       *ngFor="
         let book of books
+          | author : authorId
           | title : titleParam
-          | filter : filterType : filterParam
           | sort : sortParam;
-        let i = index
-      "
+          let i = index
+          "
     >
+    <!-- | filter : filterType : filterParam -->
       <div class="card">
         <img
           [src]="book.coverImageUrl"
@@ -48,7 +66,10 @@
     alt="Cover art for {{ selectedBook.title }}"
     class="bookDetailCover"
   />
-  <blockquote>{{ selectedBook.lastFinished }}</blockquote>
+  <p>{{selectedBook.description}}</p>
+  <hr style="clear: both;">
+  <p>{{selectedBook.pages}} pages.</p>
+  <p>Last finished reading: {{ selectedBook.lastFinished }}</p>
 </div>
 
 <div id="bookAdd" *ngIf="addingBook">

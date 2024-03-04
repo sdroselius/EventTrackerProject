@@ -8,8 +8,10 @@ import { Book } from '../models/book';
 export class AuthorPipe implements PipeTransform {
 
   transform(books: Book[], authorId: number | null): Book[] {
-    if (!authorId) { return books; }
-    return books.filter((b) => b.authors.some((a)=> a.id === authorId));
+    if (!authorId || ''+authorId == 'null') {
+      return books;
+    }
+    return books.filter((b) => {return b.authors.some((a) => {return a.id == authorId})});
   }
 
 }

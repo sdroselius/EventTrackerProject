@@ -6,6 +6,9 @@ import { BookService } from '../../services/book.service';
 import { SortPipe } from '../../pipes/sort.pipe';
 import { FilterPipe } from '../../pipes/filter.pipe';
 import { TitlePipe } from '../../pipes/title.pipe';
+import { AuthorService } from '../../services/author.service';
+import { Author } from '../../models/author';
+import { AuthorPipe } from '../../pipes/author.pipe';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +18,8 @@ import { TitlePipe } from '../../pipes/title.pipe';
     FormsModule,
     SortPipe,
     FilterPipe,
-    TitlePipe
+    TitlePipe,
+    AuthorPipe
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
@@ -23,7 +27,9 @@ import { TitlePipe } from '../../pipes/title.pipe';
 export class HomeComponent implements OnInit {
 
   books: Book[] = [];
+  authors: Author[] = [];
   sortParam: string | null = 'author';
+  authorId: number | null = null;
   filterType: string | null = null;
   filterParam: string | null = null;
   titleParam: string | null = null;
@@ -33,11 +39,13 @@ export class HomeComponent implements OnInit {
   addingBook: boolean = false;
 
   constructor(
-    private bookService: BookService
+    private bookService: BookService,
+    private authorService: AuthorService
   ) {}
 
   ngOnInit(): void {
     this.loadBooks();
+    this.loadAuthors();
   }
 
   loadBooks() {
@@ -47,6 +55,18 @@ export class HomeComponent implements OnInit {
       },
       error: (err) => {
         console.error('BookListComponent.loadBooks: error');
+        console.error(err);
+      }
+    } );
+  }
+
+  loadAuthors() {
+    this.authorService.index().subscribe( {
+      next: (authorList) => {
+        this.authors = authorList;
+      },
+      error: (err) => {
+        console.error('BookListComponent.loadAuthors: error');
         console.error(err);
       }
     } );
