@@ -23,4 +23,19 @@ You can access it at: http://52.38.48.168:8080/ReadingList
 | DELETE    | `/api/books/17`   |              |               | 204,404,400|
 | GET       | `/api/authors`      |              | List of all _author_ entities | 200 |
 
+## JavaScript/AJAX Front End
+
+blah blah
+
+### Technologies Used
+
+### Lessons Learned
+
+## Angular Front End
+
+Blah Blah
+
+### Technologies Used
+
+### Lessons Learned
 
