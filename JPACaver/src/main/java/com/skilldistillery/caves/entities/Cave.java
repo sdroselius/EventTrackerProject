@@ -3,6 +3,9 @@ package com.skilldistillery.caves.entities;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,10 +22,15 @@ public class Cave {
 	private int id;
 
 	private String name;
+	
+	@CreationTimestamp
 	@Column(name = "create_date")
 	private LocalDateTime createDate;
+	
+	@UpdateTimestamp
 	@Column(name = "last_update")
 	private LocalDateTime lastUpdate;
+	
 	@Column(name = "image_url")
 	private String imageUrl;
 	private String description;
