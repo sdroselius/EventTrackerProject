@@ -11,6 +11,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -34,7 +36,11 @@ public class Cave {
 	@Column(name = "image_url")
 	private String imageUrl;
 	private String description;
-	private Boolean enabled;
+	private Boolean enabled = true;
+	
+	@ManyToOne
+	@JoinColumn(name = "formation_type_id")
+	private FormationType formationType;
 
 	public Cave() {
 		super();
@@ -94,6 +100,14 @@ public class Cave {
 
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public FormationType getFormationType() {
+		return formationType;
+	}
+
+	public void setFormationType(FormationType formationType) {
+		this.formationType = formationType;
 	}
 
 	@Override

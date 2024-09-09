@@ -16,18 +16,19 @@ public class CaveServiceImpl implements CaveService {
 
 	@Override
 	public List<Cave> getAllCaves() {
-		return caveRepo.findAll();
+//		return caveRepo.findAll();
+		return caveRepo.findByEnabledTrue();
 	}
 
 	@Override
 	public Cave showCave(int caveId) {
-		// TODO Auto-generated method stub
-		return null;
+		return caveRepo.findByIdAndEnabledTrue(caveId);
 	}
 
 	@Override
 	public Cave create(Cave newCave) {
 		// TODO Auto-generated method stub
+		newCave.setEnabled(true);
 		return null;
 	}
 

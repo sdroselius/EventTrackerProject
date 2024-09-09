@@ -5,6 +5,9 @@
 	<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
 	<class>com.skilldistillery.caves.entities.Cave</class>
+	<class>com.skilldistillery.caves.entities.CaveVisit</class>
+	<class>com.skilldistillery.caves.entities.FormationType</class>
+	<class>com.skilldistillery.caves.entities.User</class>
 	
     <properties>
       <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/cavesdb" />
