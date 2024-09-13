@@ -38,6 +38,13 @@ public class Cave {
 	private String description;
 	private Boolean enabled = true;
 	
+	@Column(name = "explored_length_km")
+	private Double exploredLengthKm;
+	@Column(name = "open_to_public")
+	private Boolean openToPublic;
+	@Column(name = "entrance_authority")
+	private String entranceAuthority;
+	
 	@ManyToOne
 	@JoinColumn(name = "formation_type_id")
 	private FormationType formationType;
@@ -104,6 +111,30 @@ public class Cave {
 
 	public FormationType getFormationType() {
 		return formationType;
+	}
+
+	public Double getExploredLengthKm() {
+		return exploredLengthKm;
+	}
+
+	public Boolean getOpenToPublic() {
+		return openToPublic;
+	}
+
+	public void setOpenToPublic(Boolean openToPublic) {
+		this.openToPublic = openToPublic;
+	}
+
+	public String getEntranceAuthority() {
+		return entranceAuthority;
+	}
+
+	public void setEntranceAuthority(String entranceAuthority) {
+		this.entranceAuthority = entranceAuthority;
+	}
+
+	public void setExploredLengthKm(Double exploredLengthKm) {
+		this.exploredLengthKm = exploredLengthKm;
 	}
 
 	public void setFormationType(FormationType formationType) {

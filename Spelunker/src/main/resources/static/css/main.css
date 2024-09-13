@@ -2,3 +2,7 @@
 body {
 	background-color: lightgrey;
 }
+
+.caveDetailImage {
+	height: 30vw;
+}

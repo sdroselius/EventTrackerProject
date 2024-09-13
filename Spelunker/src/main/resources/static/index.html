@@ -18,20 +18,31 @@
 
 		<h1>Welcome to the Cave Log</h1>
 
-		<div id="caveListDiv">
-			<table>
-				<thead>
+		<div id="caveListDiv" class="container">
+			<table class="table table-striped">
+				<thead class="table-dark">
 					<tr>
-						<th>Id</th>
 						<th>Name</th>
+						<th>Last Updated</th>
+						<th>Explored Length (km)</th>
 					</tr>
 				</thead>
 				<tbody id="caveListBody">
 				</tbody>
 			</table>
+			<div class="container">
+		  <form name="caveForm">
+		   <div class="row">
+		    <input class="form-control col" type="number" name="caveId">
+		    <button class="btn btn-info col-auto" name="lookup">Get Cave by Id</button>
+		   </div>
+		  </form>
+			</div>
 		</div>
 		
-		<div id="caveDetailsDiv"></div>
+		<div id="caveDetailsDiv">
+	
+		</div>
 		
 		<div id="addNewCaveDiv">
 		</div>
