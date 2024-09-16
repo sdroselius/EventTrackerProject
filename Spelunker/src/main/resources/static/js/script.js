@@ -47,6 +47,7 @@ function displayCavesList(caveList) {
 				console.log(row.caveId);
 				getCave(row.caveId);
 			});
+			
 		
 			let td = document.createElement('td');
 			td.textContent = cave.name;

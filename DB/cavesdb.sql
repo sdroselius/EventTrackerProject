@@ -61,12 +61,15 @@ CREATE TABLE IF NOT EXISTS `cave` (
   `create_date` DATETIME NULL,
   `last_update` DATETIME NULL,
   `image_url` VARCHAR(2000) NULL,
-  `description` VARCHAR(45) NULL,
+  `description` TEXT NULL,
   `enabled` TINYINT NULL DEFAULT 1,
   `primary_entrance_latitude` DOUBLE NULL,
   `primary_entrance_longitude` DOUBLE NULL,
   `added_by_id` INT NOT NULL,
   `formation_type_id` INT NOT NULL,
+  `explored_length_km` DOUBLE NULL,
+  `open_to_public` TINYINT NULL,
+  `entrance_authority` VARCHAR(100) NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_cave_user_idx` (`added_by_id` ASC) VISIBLE,
   INDEX `fk_cave_formation_type1_idx` (`formation_type_id` ASC) VISIBLE,
@@ -180,9 +183,11 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `cavesdb`;
-INSERT INTO `cave` (`id`, `name`, `create_date`, `last_update`, `image_url`, `description`, `enabled`, `primary_entrance_latitude`, `primary_entrance_longitude`, `added_by_id`, `formation_type_id`) VALUES (1, 'Mammoth Cave', '2024-09-06', '2024-09-06', NULL, NULL, 1, NULL, NULL, 2, 1);
-INSERT INTO `cave` (`id`, `name`, `create_date`, `last_update`, `image_url`, `description`, `enabled`, `primary_entrance_latitude`, `primary_entrance_longitude`, `added_by_id`, `formation_type_id`) VALUES (2, 'No such cave', NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 3);
-INSERT INTO `cave` (`id`, `name`, `create_date`, `last_update`, `image_url`, `description`, `enabled`, `primary_entrance_latitude`, `primary_entrance_longitude`, `added_by_id`, `formation_type_id`) VALUES (3, 'Carlsbad Caverns', '2024-09-06', '2024-09-26', NULL, NULL, 1, NULL, NULL, 2, 1);
+INSERT INTO `cave` (`id`, `name`, `create_date`, `last_update`, `image_url`, `description`, `enabled`, `primary_entrance_latitude`, `primary_entrance_longitude`, `added_by_id`, `formation_type_id`, `explored_length_km`, `open_to_public`, `entrance_authority`) VALUES (1, 'Mammoth Cave', '2024-09-06', '2024-09-06', 'https://www.nps.gov/common/uploads/cropped_image/primary/548B411E-AFC0-A309-265E19C32D8FD499.jpg?width=1600&quality=90&mode=crop', 'Mammoth Cave is the longest known cave system in the world, with over 405 miles (651 km) mapped. The cave system was formed by water dissolving carbonate rocks, creating sinkholes, tunnels, and underground rivers.', 1, 37.18758, -86.10357, 2, 1, 685.6, 1, 'National Park Service');
+INSERT INTO `cave` (`id`, `name`, `create_date`, `last_update`, `image_url`, `description`, `enabled`, `primary_entrance_latitude`, `primary_entrance_longitude`, `added_by_id`, `formation_type_id`, `explored_length_km`, `open_to_public`, `entrance_authority`) VALUES (2, 'No such cave', NULL, NULL, NULL, NULL, 0, NULL, NULL, 1, 3, NULL, NULL, NULL);
+INSERT INTO `cave` (`id`, `name`, `create_date`, `last_update`, `image_url`, `description`, `enabled`, `primary_entrance_latitude`, `primary_entrance_longitude`, `added_by_id`, `formation_type_id`, `explored_length_km`, `open_to_public`, `entrance_authority`) VALUES (3, 'Carlsbad Caverns', '2024-09-06', '2024-09-26', 'https://www.aarp.org/content/dam/aarp/travel/national-parks/2022/12/1140-carlsbad-caverns-entrance-path.jpg', 'The Natural Entrance is a path into the namesake Carlsbad Cavern. Stalactites cling to the roof of the Big Room, a huge underground chamber in the cavern.', 1, 32.1906420, -104.5033091, 2, 1, 63.5, 1, 'National Park Service');
+INSERT INTO `cave` (`id`, `name`, `create_date`, `last_update`, `image_url`, `description`, `enabled`, `primary_entrance_latitude`, `primary_entrance_longitude`, `added_by_id`, `formation_type_id`, `explored_length_km`, `open_to_public`, `entrance_authority`) VALUES (4, 'Cave of the Winds', '2024-09-13', '2024-09-13', 'https://caveofthewinds.com/wp-content/uploads/2019/07/Cave-Hero-1.jpg', 'Cave of the Winds is a cave in the Pikes Peak region of Colorado. It is located just west of Colorado Springs on U.S. Highway 24, near the Manitou Cliff Dwellings. Tours of the complex of caves are given daily.', 1, 38.87274, -104.92071, 2, 1, 3.281172, 1, 'Cave of the Winds Mountain Park');
+INSERT INTO `cave` (`id`, `name`, `create_date`, `last_update`, `image_url`, `description`, `enabled`, `primary_entrance_latitude`, `primary_entrance_longitude`, `added_by_id`, `formation_type_id`, `explored_length_km`, `open_to_public`, `entrance_authority`) VALUES (5, 'Groaning Cave', '2024-09-13', '2024-09-13', 'https://townsquare.media/site/507/files/2022/11/attachment-derek-bristol-youtube-5.jpg?w=780&q=75', 'The Groaning Cave is the longest cave in Colorado with nearly 15 miles of tunnels and is located in the White River National Forest in Garfield County.', 1, NULL, NULL, 2, 1, NULL, 0, 'White River National Forest');
 
 COMMIT;
 
