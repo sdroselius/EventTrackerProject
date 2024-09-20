@@ -1,10 +1,13 @@
 package com.skilldistillery.caves.entities;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,6 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -48,6 +52,10 @@ public class Cave {
 	@ManyToOne
 	@JoinColumn(name = "formation_type_id")
 	private FormationType formationType;
+	
+	@OneToMany(mappedBy = "cave")
+	@JsonIgnore
+	private List<CaveVisit> caveVisits;
 
 	public Cave() {
 		super();
@@ -139,6 +147,14 @@ public class Cave {
 
 	public void setFormationType(FormationType formationType) {
 		this.formationType = formationType;
+	}
+
+	public List<CaveVisit> getCaveVisits() {
+		return caveVisits;
+	}
+
+	public void setCaveVisits(List<CaveVisit> caveVisits) {
+		this.caveVisits = caveVisits;
 	}
 
 	@Override

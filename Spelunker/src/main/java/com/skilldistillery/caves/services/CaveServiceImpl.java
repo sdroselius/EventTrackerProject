@@ -16,7 +16,6 @@ public class CaveServiceImpl implements CaveService {
 
 	@Override
 	public List<Cave> getAllCaves() {
-//		return caveRepo.findAll();
 		return caveRepo.findByEnabledTrue();
 	}
 
@@ -27,21 +26,29 @@ public class CaveServiceImpl implements CaveService {
 
 	@Override
 	public Cave create(Cave newCave) {
-		// TODO Auto-generated method stub
 		newCave.setEnabled(true);
-		return null;
+		return caveRepo.saveAndFlush(newCave);
 	}
 
 	@Override
 	public Cave update(int caveId, Cave updatingCave) {
-		// TODO Auto-generated method stub
+		Cave existing = caveRepo.findByIdAndEnabledTrue(caveId);
+		if (existing != null) {
+			existing.setDescription(updatingCave.getDescription());
+			existing.setEntranceAuthority(updatingCave.getEntranceAuthority());
+			existing.setExploredLengthKm(updatingCave.getExploredLengthKm());
+			existing.setImageUrl(updatingCave.getImageUrl());
+			existing.setName(updatingCave.getName());
+			existing.setOpenToPublic(updatingCave.getOpenToPublic());
+			return caveRepo.saveAndFlush(existing);
+		}
 		return null;
 	}
 
 	@Override
 	public boolean delete(int caveId) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean deleted = false;
+		return deleted;
 	}
 
 }

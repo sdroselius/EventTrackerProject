@@ -7,6 +7,9 @@ window.addEventListener('load', function() {
 
 function init() {
 	loadAllCaves();
+	loadFormationTypes();
+	hideAddCave();
+	
 	caveForm.lookup.addEventListener('click', function(e){
 		e.preventDefault();
 		let caveId = caveForm.caveId.value;
@@ -14,6 +17,16 @@ function init() {
 		  getCave(caveId);
 		}
 	});
+	
+	document.getElementById("showAddCaveButton").addEventListener('click', function(e){
+		showAddCave();
+	});
+	
+	document.getElementById("cancelAddCaveButton").addEventListener('click', function(e){
+		hideAddCave();
+	});
+	
+	
 }
 
 function loadAllCaves() {
@@ -23,8 +36,24 @@ function loadAllCaves() {
 		if (xhr.readyState === xhr.DONE) {
 			if (xhr.status === 200) {
 				let caves = JSON.parse(xhr.responseText);
-				console.log(caves);
 				displayCavesList(caves);
+			}
+			else {
+				//FIXME
+			}
+		}
+	};
+	xhr.send();
+}
+
+function loadFormationTypes() {
+	let xhr = new XMLHttpRequest();
+	xhr.open('GET', 'api/formationTypes');
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === xhr.DONE) {
+			if (xhr.status === 200) {
+				let types = JSON.parse(xhr.responseText);
+				displayFormationTypes(types);
 			}
 			else {
 				//FIXME
@@ -65,6 +94,16 @@ function displayCavesList(caveList) {
 	}
 }
 
+function displayFormationTypes(types) {
+	let select = addNewCaveForm.formationType;
+	for (let type of types) {
+		let option = document.createElement('option');
+		option.value = type.id;
+		option.textContent = type.name;
+		select.appendChild(option);
+	}
+}
+
 function getCave(caveId) {
 	let xhr = new XMLHttpRequest();
 	xhr.open('GET', 'api/caves/' + caveId);
@@ -72,7 +111,7 @@ function getCave(caveId) {
 		if (xhr.readyState === xhr.DONE) {
 			if (xhr.status === 200) {
 				let cave = JSON.parse(xhr.responseText);
-				console.log(cave);
+//				console.log(cave);
 				displayCave(cave);
 			}
 			else {
@@ -111,5 +150,22 @@ function displayCave(cave) {
 }
 
 
+function showAddCave() {
+	let detailsDiv = document.getElementById('caveDetailsDiv');
+	let caveListDiv = document.getElementById('caveListDiv');
+	let addCaveDiv = document.getElementById('addNewCaveDiv');
+	detailsDiv.style.display = 'none';
+	caveListDiv.style.display = 'none';
+	addCaveDiv.style.display = 'block';
+}
 
+function hideAddCave() {
+	let detailsDiv = document.getElementById('caveDetailsDiv');
+	let caveListDiv = document.getElementById('caveListDiv');
+	let addCaveDiv = document.getElementById('addNewCaveDiv');
+	addCaveDiv.style.display = 'none';
+	detailsDiv.style.display = 'block';
+	caveListDiv.style.display = 'block';
+	addNewCaveForm.reset();
+}
 

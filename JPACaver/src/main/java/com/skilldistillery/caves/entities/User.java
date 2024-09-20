@@ -7,12 +7,14 @@ import java.util.Objects;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class User {
@@ -42,9 +44,10 @@ public class User {
 	@UpdateTimestamp
 	private LocalDateTime lastUpdate;
 	
-	@ManyToMany(mappedBy = "tripMembers")
-	private List<CaveVisit> cavingCompanions;
-
+	@JsonIgnoreProperties({"user"})
+	@OneToMany(mappedBy = "user")
+	private List<CaveVisit> caveVisits;
+	
 	public User() {
 		super();
 	}
@@ -137,12 +140,12 @@ public class User {
 		this.lastUpdate = lastUpdate;
 	}
 
-	public List<CaveVisit> getCavingCompanions() {
-		return cavingCompanions;
+	public List<CaveVisit> getCaveVisits() {
+		return caveVisits;
 	}
 
-	public void setCavingCompanions(List<CaveVisit> cavingCompanions) {
-		this.cavingCompanions = cavingCompanions;
+	public void setCaveVisits(List<CaveVisit> cavingCompanions) {
+		this.caveVisits = cavingCompanions;
 	}
 
 	@Override

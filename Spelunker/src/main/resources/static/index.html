@@ -31,13 +31,14 @@
 				</tbody>
 			</table>
 			<div class="container">
-		  <form name="caveForm">
-		   <div class="row">
-		    <input class="form-control col" type="number" name="caveId">
-		    <button class="btn btn-info col-auto" name="lookup">Get Cave by Id</button>
-		   </div>
-		  </form>
+			  <form name="caveForm">
+			   <div class="row">
+			    <input class="form-control col" type="number" name="caveId">
+			    <button class="btn btn-info col-auto" name="lookup">Get Cave by Id</button>
+			   </div>
+			  </form>
 			</div>
+			<button id="showAddCaveButton" class="btn btn-outline-success">Add a New Cave</button>
 		</div>
 		
 		<div id="caveDetailsDiv">
@@ -45,6 +46,35 @@
 		</div>
 		
 		<div id="addNewCaveDiv">
+		<form name="addNewCaveForm">
+			<div class="row">
+				<label for="name" class="form-label col-auto">Name</label>
+				<input type="text" name="name" class="form-control col">
+			</div>
+			<div class="row">
+				<label for="imageUrl" class="form-label col-auto">Image URL</label>
+				<input type="text" name="imageUrl" class="form-control col">
+			</div>
+			<div class="row">
+				<label for="description" class="form-label col-auto">Description</label>
+				<textarea type="text" name="description" class="form-control col"></textarea>
+			</div>
+			<div class="row">
+				<label for="primaryEntranceLatitude" class="form-label col-auto">Latitude</label>
+				<input type="number" name="primaryEntranceLatitude" class="form-control col">
+			</div>
+			<div class="row">
+				<label for="primaryEntranceLongitude" class="form-label col-auto">Longitude</label>
+				<input type="number" name="primaryEntranceLongitude" class="form-control col">
+			</div>
+			<div class="row">
+				<label for="formationType" class="form-label col-auto">Formation Type</label>
+				<select name="formationType" class="form-select col"></select>
+			</div>
+			<button id="cancelAddCaveButton" class="btn btn-outline-danger">Cancel</button>
+			<button name="addNewCaveButton" class="btn btn-outline-primary">Add Cave</button>
+		</form>
+		
 		</div>
 
 	</main>
