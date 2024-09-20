@@ -18,6 +18,9 @@ import { FormsModule } from '@angular/forms';
 export class HomeComponent implements OnInit {
 
   caves: Cave[] = [];
+  selected: Cave | null = null;
+  newCave: Cave = new Cave();
+  editCave: Cave | null = null;
 
   constructor(
     private caveService: CaveService
@@ -39,4 +42,9 @@ export class HomeComponent implements OnInit {
     } );
   }
 
+  //TODO detail div with selected cave
+  //TODO form to create new cave
+  //TODO update form
+  //TODO delete button - where? in list or detail view?
+  //TODO Models for FormationType, CaveVisit, User
 }

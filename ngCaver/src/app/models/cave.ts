@@ -8,6 +8,7 @@ export class Cave {
   entranceAuthority: string;
   createDate: string | undefined;
   lastUpdate: string | undefined;
+  // user: User;
 
   constructor(
     id: number = 0,
