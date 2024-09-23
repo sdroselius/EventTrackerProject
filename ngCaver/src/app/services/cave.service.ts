@@ -26,5 +26,48 @@ export class CaveService {
     );
   }
 
-  // TODO: retrieve, create, update, destroy methods
+  show(caveId: number): Observable<Cave> {
+    return this.http.get<Cave>(`${this.url}/${caveId}`).pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError(
+          () => new Error('CaveService.show(): error retrieving caves: ' + err)
+        );
+      })
+    );
+  }
+
+  create(newCave: Cave): Observable<Cave> {
+    return this.http.post<Cave>(this.url, newCave).pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError(
+          () => new Error('CaveService.create(): error posting cave: ' + err)
+        );
+      })
+    );
+  }
+
+  update(updatingCave: Cave): Observable<Cave> {
+    return this.http.put<Cave>(`${this.url}/${updatingCave.id}`, updatingCave).pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError(
+          () => new Error('CaveService.update(): error putting cave: ' + err)
+        );
+      })
+    );
+  }
+
+  destroy(caveId: number): Observable<void> {
+    return this.http.delete<void>(`${this.url}/${caveId}`).pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError(
+          () => new Error('CaveService.destroy(): error deleting cave: ' + err)
+        );
+      })
+    );
+  }
+
 }

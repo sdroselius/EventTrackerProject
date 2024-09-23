@@ -1,6 +1,22 @@
 <h1>Welcome, Caver</h1>
 
-<ul>
-  <!-- TODO build this as a table -->
-   <li *ngFor="let cave of caves">{{cave.name}}</li>
-</ul>
+<table class="table table-striped table-hover">
+  <thead class="table-dark">
+    <tr>
+      <th>Task</th>
+      <th>Formation Type</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let cave of caves">
+      <td (click)="displayCave(cave)">{{ cave.name }}</td>
+      <td>
+        <select name="formationType" [(ngModel)]="cave.formationType.id" >
+          <option *ngFor="let type of formationTypes" value="{{type.id}}">{{type.name}}</option>
+        </select>
+      </td>
+      <td> <button class="btn btn-danger" (click)="deleteCave(cave.id)">X</button> </td>
+    </tr>
+  </tbody>
+</table>
