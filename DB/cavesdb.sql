@@ -162,6 +162,8 @@ START TRANSACTION;
 USE `cavesdb`;
 INSERT INTO `user` (`id`, `username`, `password`, `enabled`, `role`, `first_name`, `last_name`, `about_me`, `profile_image_url`, `create_date`, `last_update`) VALUES (1, 'admin', 'test', 1, NULL, 'Big', 'Boss', NULL, NULL, '2024-01-01', '2024-01-01');
 INSERT INTO `user` (`id`, `username`, `password`, `enabled`, `role`, `first_name`, `last_name`, `about_me`, `profile_image_url`, `create_date`, `last_update`) VALUES (2, 'pitplunger', 'test', 1, NULL, 'Pete', 'Petromorph', NULL, NULL, '2024-06-06', '2024-06-06');
+INSERT INTO `user` (`id`, `username`, `password`, `enabled`, `role`, `first_name`, `last_name`, `about_me`, `profile_image_url`, `create_date`, `last_update`) VALUES (3, 'donald', 'test', 1, NULL, 'Donald', 'Davis', NULL, NULL, '2024-09-09', '2024-09-09');
+INSERT INTO `user` (`id`, `username`, `password`, `enabled`, `role`, `first_name`, `last_name`, `about_me`, `profile_image_url`, `create_date`, `last_update`) VALUES (4, 'collins`', 'test', 1, NULL, 'Floyd', 'Collins', NULL, NULL, NULL, NULL);
 
 COMMIT;
 
@@ -188,6 +190,7 @@ INSERT INTO `cave` (`id`, `name`, `create_date`, `last_update`, `image_url`, `de
 INSERT INTO `cave` (`id`, `name`, `create_date`, `last_update`, `image_url`, `description`, `enabled`, `primary_entrance_latitude`, `primary_entrance_longitude`, `added_by_id`, `formation_type_id`, `explored_length_km`, `open_to_public`, `entrance_authority`) VALUES (3, 'Carlsbad Caverns', '2024-09-06', '2024-09-26', 'https://www.aarp.org/content/dam/aarp/travel/national-parks/2022/12/1140-carlsbad-caverns-entrance-path.jpg', 'The Natural Entrance is a path into the namesake Carlsbad Cavern. Stalactites cling to the roof of the Big Room, a huge underground chamber in the cavern.', 1, 32.1906420, -104.5033091, 2, 1, 63.5, 1, 'National Park Service');
 INSERT INTO `cave` (`id`, `name`, `create_date`, `last_update`, `image_url`, `description`, `enabled`, `primary_entrance_latitude`, `primary_entrance_longitude`, `added_by_id`, `formation_type_id`, `explored_length_km`, `open_to_public`, `entrance_authority`) VALUES (4, 'Cave of the Winds', '2024-09-13', '2024-09-13', 'https://caveofthewinds.com/wp-content/uploads/2019/07/Cave-Hero-1.jpg', 'Cave of the Winds is a cave in the Pikes Peak region of Colorado. It is located just west of Colorado Springs on U.S. Highway 24, near the Manitou Cliff Dwellings. Tours of the complex of caves are given daily.', 1, 38.87274, -104.92071, 2, 1, 3.281172, 1, 'Cave of the Winds Mountain Park');
 INSERT INTO `cave` (`id`, `name`, `create_date`, `last_update`, `image_url`, `description`, `enabled`, `primary_entrance_latitude`, `primary_entrance_longitude`, `added_by_id`, `formation_type_id`, `explored_length_km`, `open_to_public`, `entrance_authority`) VALUES (5, 'Groaning Cave', '2024-09-13', '2024-09-13', 'https://townsquare.media/site/507/files/2022/11/attachment-derek-bristol-youtube-5.jpg?w=780&q=75', 'The Groaning Cave is the longest cave in Colorado with nearly 15 miles of tunnels and is located in the White River National Forest in Garfield County.', 1, NULL, NULL, 2, 1, NULL, 0, 'White River National Forest');
+INSERT INTO `cave` (`id`, `name`, `create_date`, `last_update`, `image_url`, `description`, `enabled`, `primary_entrance_latitude`, `primary_entrance_longitude`, `added_by_id`, `formation_type_id`, `explored_length_km`, `open_to_public`, `entrance_authority`) VALUES (6, 'Kazumura Cave', '2024-09-09', '2024-09-09', 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Kazumura_collapsed_floor.jpg/440px-Kazumura_collapsed_floor.jpg', 'Kazumura Cave is a lava tube and has been surveyed at 40.7 miles (65.5 km) long and 3,614 feet (1,102 m) deep making it the longest and deepest lava tube in the world. The cave is located on the island of Hawaiʻi on the eastern slope of Kīlauea.', 1, 19.421097, -155.286762, 3, 2, 65.5, 0, NULL);
 
 COMMIT;
 
@@ -208,6 +211,7 @@ COMMIT;
 START TRANSACTION;
 USE `cavesdb`;
 INSERT INTO `trip_members` (`user_id`, `cave_visit_id`) VALUES (2, 1);
+INSERT INTO `trip_members` (`user_id`, `cave_visit_id`) VALUES (3, 1);
 
 COMMIT;
 
