@@ -1,25 +1,19 @@
 package com.skilldistillery.dirtysoda.entities;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "dirty_drink")
-public class DirtyDrink {
+@Table(name = "add_in")
+public class AddIn {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,23 +23,11 @@ public class DirtyDrink {
 	private String description;
 	@Column(name = "image_url")
 	private String imageUrl;
-	private String brand;
-	@Column(name = "create_date")
-	@CreationTimestamp
-	private LocalDateTime createdDate;
-
-	@Column(name = "last_update")
-	@UpdateTimestamp
-	private LocalDateTime lastUpdate;
 	
-	@ManyToOne
-	@JoinColumn(name = "base_drink_id")
-	private BaseDrink baseDrink;
-
-	@OneToMany(mappedBy = "dirtyDrink")
+	@OneToMany(mappedBy = "addIn")
 	private List<DirtyDrinkAddIn> dirtyDrinkAddIns;
 
-	public DirtyDrink() {
+	public AddIn() {
 		super();
 	}
 
@@ -81,36 +63,12 @@ public class DirtyDrink {
 		this.imageUrl = imageUrl;
 	}
 
-	public String getBrand() {
-		return brand;
+	public List<DirtyDrinkAddIn> getDirtyDrinkAddIns() {
+		return dirtyDrinkAddIns;
 	}
 
-	public void setBrand(String brand) {
-		this.brand = brand;
-	}
-
-	public LocalDateTime getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(LocalDateTime createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public LocalDateTime getLastUpdate() {
-		return lastUpdate;
-	}
-
-	public void setLastUpdate(LocalDateTime lastUpdate) {
-		this.lastUpdate = lastUpdate;
-	}
-
-	public BaseDrink getBaseDrink() {
-		return baseDrink;
-	}
-
-	public void setBaseDrink(BaseDrink baseDrink) {
-		this.baseDrink = baseDrink;
+	public void setDirtyDrinkAddIns(List<DirtyDrinkAddIn> dirtyDrinkAddIns) {
+		this.dirtyDrinkAddIns = dirtyDrinkAddIns;
 	}
 
 	@Override
@@ -126,14 +84,15 @@ public class DirtyDrink {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		DirtyDrink other = (DirtyDrink) obj;
+		AddIn other = (AddIn) obj;
 		return id == other.id;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("DirtyDrink [id=").append(id).append(", name=").append(name).append("]");
+		builder.append("AddIn [id=").append(id).append(", name=").append(name).append(", description=")
+				.append(description).append(", imageUrl=").append(imageUrl).append("]");
 		return builder.toString();
 	}
 
