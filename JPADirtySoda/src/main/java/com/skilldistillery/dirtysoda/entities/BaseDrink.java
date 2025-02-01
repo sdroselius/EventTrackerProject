@@ -1,6 +1,9 @@
 package com.skilldistillery.dirtysoda.entities;
 
+import java.util.List;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,6 +31,10 @@ public class BaseDrink {
 	@ManyToOne
 	@JoinColumn(name = "manufacturer_id")
 	private Manufacturer manufacturer;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "baseDrink")
+	private List<DirtyDrink> dirtyDrinks;
 
 	public BaseDrink() {
 		super();
@@ -70,6 +78,14 @@ public class BaseDrink {
 
 	public void setManufacturer(Manufacturer manufacturer) {
 		this.manufacturer = manufacturer;
+	}
+
+	public List<DirtyDrink> getDirtyDrinks() {
+		return dirtyDrinks;
+	}
+
+	public void setDirtyDrinks(List<DirtyDrink> dirtyDrinks) {
+		this.dirtyDrinks = dirtyDrinks;
 	}
 
 	@Override

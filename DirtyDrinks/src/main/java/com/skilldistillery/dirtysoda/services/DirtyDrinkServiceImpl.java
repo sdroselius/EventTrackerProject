@@ -21,26 +21,39 @@ public class DirtyDrinkServiceImpl implements DirtyDrinkService {
 
 	@Override
 	public DirtyDrink findById(int drinkId) {
-		// TODO Auto-generated method stub
-		return null;
+		return drinkRepo.findById(drinkId).orElse(null);
 	}
 
 	@Override
 	public DirtyDrink create(DirtyDrink newDrink) {
-		// TODO Auto-generated method stub
-		return null;
+		newDrink.setEnabled(true);
+		return drinkRepo.saveAndFlush(newDrink);
 	}
 
 	@Override
 	public DirtyDrink update(int drinkId, DirtyDrink drink) {
-		// TODO Auto-generated method stub
+		DirtyDrink managed = drinkRepo.findById(drinkId).orElse(null);
+		if (managed != null) {
+			managed.setBrand(drink.getBrand());
+			managed.setDescription(drink.getDescription());
+			managed.setImageUrl(drink.getImageUrl());
+			managed.setName(drink.getName());
+			if (drink.getBaseDrink() != null) {
+				managed.setBaseDrink(drink.getBaseDrink());
+			}
+			return drinkRepo.saveAndFlush(managed);
+		}
 		return null;
 	}
 
 	@Override
 	public boolean deleteById(int drinkId) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean deleted = false;
+		DirtyDrink drink = drinkRepo.findById(drinkId).orElse(null);
+		if (drink != null) {
+			
+		}
+		return deleted;
 	}
 
 }

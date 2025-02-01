@@ -1,12 +1,16 @@
 package com.skilldistillery.dirtysoda.entities;
 
+import java.util.List;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Manufacturer {
@@ -20,6 +24,10 @@ public class Manufacturer {
 	private String logoImageUrl;
 	@Column(name = "website_url")
 	private String websiteUrl;
+	
+	@JsonIgnoreProperties("manufacturer")
+	@OneToMany(mappedBy = "manufacturer")
+	private List<BaseDrink> baseDrinks;
 
 	public Manufacturer() {
 		super();
@@ -55,6 +63,14 @@ public class Manufacturer {
 
 	public void setWebsiteUrl(String websiteUrl) {
 		this.websiteUrl = websiteUrl;
+	}
+
+	public List<BaseDrink> getBaseDrinks() {
+		return baseDrinks;
+	}
+
+	public void setBaseDrinks(List<BaseDrink> baseDrinks) {
+		this.baseDrinks = baseDrinks;
 	}
 
 	@Override

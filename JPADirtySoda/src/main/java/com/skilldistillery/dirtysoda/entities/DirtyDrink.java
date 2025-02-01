@@ -7,6 +7,8 @@ import java.util.Objects;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,6 +32,7 @@ public class DirtyDrink {
 	@Column(name = "image_url")
 	private String imageUrl;
 	private String brand;
+	private boolean enabled;
 	@Column(name = "create_date")
 	@CreationTimestamp
 	private LocalDateTime createdDate;
@@ -42,6 +45,7 @@ public class DirtyDrink {
 	@JoinColumn(name = "base_drink_id")
 	private BaseDrink baseDrink;
 
+	@JsonIgnoreProperties("dirtyDrink")
 	@OneToMany(mappedBy = "dirtyDrink")
 	private List<DirtyDrinkAddIn> dirtyDrinkAddIns;
 
@@ -87,6 +91,22 @@ public class DirtyDrink {
 
 	public void setBrand(String brand) {
 		this.brand = brand;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public List<DirtyDrinkAddIn> getDirtyDrinkAddIns() {
+		return dirtyDrinkAddIns;
+	}
+
+	public void setDirtyDrinkAddIns(List<DirtyDrinkAddIn> dirtyDrinkAddIns) {
+		this.dirtyDrinkAddIns = dirtyDrinkAddIns;
 	}
 
 	public LocalDateTime getCreatedDate() {
