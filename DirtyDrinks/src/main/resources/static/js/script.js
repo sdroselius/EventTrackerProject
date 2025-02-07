@@ -5,6 +5,9 @@ window.addEventListener('load', function(e){
 	init();
 } );
 
+
+let url = 'api/dirtyDrinks';
+
 function init() {
 	console.log('In init()');
 	
@@ -15,7 +18,8 @@ function init() {
 
 function loadDrinkList() {
 	let xhr = new XMLHttpRequest();
-	xhr.open('GET', 'api/dirtyDrinks');
+	xhr.open('GET', url);
+//	xhr.open('GET', 'api/dirtyDrinks');
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === xhr.DONE) {
 			if (xhr.status === 200) {
@@ -64,7 +68,8 @@ function displayDrinkList(drinks) {
 
 function getDrink(drinkId) {
 	let xhr = new XMLHttpRequest();
-	xhr.open('GET', `api/dirtyDrinks/${drinkId}`);
+//	xhr.open('GET', `api/dirtyDrinks/${drinkId}`);
+	xhr.open('GET', `${url}/${drinkId}`);
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === xhr.DONE) {
 			if (xhr.status === 200) {
