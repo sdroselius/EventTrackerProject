@@ -1,6 +1,132 @@
-<h1>Dirty Drinks for Clean People</h1>
+<h1>Dirty Sodaz for Clean People</h1>
 
-<div *ngFor="let drink of dirtyDrinks">
-  <p>{{drink.name}}</p>
-  <li>Base drink: {{drink.baseDrink.name}}</li>
+<div *ngIf="!selectedDrink && !editDrink">
+  <table class="table table-striped table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Base Drink</th>
+        <th>Add Ins</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><input type="text" name="name" [(ngModel)]="newDrink.name" placeholder="Drink name"></td>
+      <td colspan="2">
+        <div class="row">
+          <span class="col-auto">Base Drink:</span>
+          <select name="baseDrink" [(ngModel)]="newDrink.baseDrink.id" class="col">
+            <option *ngFor="let baseDrink of baseDrinks" value="{{baseDrink.id}}">{{baseDrink.name}}</option>
+          </select>
+        </div>
+      </td>
+      <td><button class="btn btn-primary" (click)="addNewDrink(newDrink)">Add New Drink</button></td>
+    </tr>
+    <tr *ngFor="let drink of dirtyDrinks" (click)="goToDetails(drink)">
+      <td>
+        <img [src]="drink.imageUrl ? drink.imageUrl : 'images/soda_default.jpg'" alt="{{drink.name}} thumnail image" class="dirty-drink-thumb">
+      </td>
+      <td>{{drink.baseDrink.name}}</td>
+      <td>{{drink.name}}</td>
+      <td><span *ngFor="let addIn of drink.dirtyDrinkAddIns;index as i">{{addIn.addIn.name}}<span *ngIf="i < drink.dirtyDrinkAddIns.length-1">, </span></span> </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="selectedDrink && ! editDrink" id="drinkDetails">
+  <h1>{{selectedDrink.name}}</h1>
+  <img [src]="selectedDrink.imageUrl ? selectedDrink.imageUrl : 'images/soda_default.jpg'" alt="{{selectedDrink.name}} image" class="dirty-drink-image">
+  <p>{{selectedDrink.description}}</p>
+  <div *ngIf="selectedDrink.dirtyDrinkAddIns.length > 0">
+    <h4>Base Drink: {{selectedDrink.baseDrink.name}}</h4>
+    <h4>Add-Ins</h4>
+    <ul>
+      <li *ngFor="let addIn of selectedDrink.dirtyDrinkAddIns">
+        {{addIn.addIn.name}}: {{addIn.amount}} {{addIn.amountUnit}}
+      </li>
+    </ul>
+  </div>
+  <button class="btn btn-outline-danger" (click)="displayTable()">Back to List</button>
+  <button class="btn btn-outline-info" (click)="goToEditDrink(selectedDrink)">Edit</button>
+  <button class="btn btn-danger" (click)="displayTable()">Delete</button>
+</div>
+
+<div *ngIf="editDrink" id="drinkEdit">
+   <form>
+    <div class="row">
+      <label for="name" class="form-label col-auto">Name</label>
+      <input type="text" name="name" class="form-control col" [(ngModel)]="editDrink.name">
+    </div>
+
+    <div class="row">
+      <span class="col-auto">Base Drink:</span>
+      <select name="baseDrink" [(ngModel)]="editDrink.baseDrink.id" class="col">
+        <option *ngFor="let baseDrink of baseDrinks" value="{{baseDrink.id}}">{{baseDrink.name}}</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <label for="imageUrl" class="form-label col-auto">Image URL</label>
+      <input type="text" name="imageUrl" class="form-control col" [(ngModel)]="editDrink.imageUrl">
+    </div>
+    <div class="row">
+      <label for="brand" class="form-label col-auto">Brand</label>
+      <input type="text" name="brand" class="form-control col" [(ngModel)]="editDrink.brand">
+    </div>
+
+    <div class="row">
+      <label for="description" class="form-label col-auto">Description</label>
+      <textarea name="description" class="form-control col" [(ngModel)]="editDrink.description"></textarea>
+    </div>
+
+    <div id="AddIns">
+      <h3>Add Ins</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Add In</th>
+            <th>Amount</th>
+            <th>Update</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let addIn of editDrink.dirtyDrinkAddIns">
+            <td>{{addIn.addIn.name}}</td>
+            <td>{{addIn.amount}} {{addIn.amountUnit}}</td>
+            <td>
+              <form>
+                <div class="row">
+                  <input type="number" name="amount" [(ngModel)]="addIn.amount" class="form-control col">
+                  <input type="text" name="amountUnit" [(ngModel)]="addIn.amountUnit" class="form-control col">
+                  <button class="btn btn-outline-success col-auto">Update Add In</button>
+                </div>
+              </form>
+            </td>
+            <td><button class="btn btn-danger" (click)="removeDirtyDrinkAddIn(addIn)">X</button></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4>Add an Add In</h4>
+      <form (ngSubmit)="addDirtyDrinkAddIn(newDirtyDrinkAddIn)">
+        <div class="row">
+          <input type="hidden" name="id" [(ngModel)]="newDirtyDrinkAddIn.dirtyDrink.id">
+          <select name="dirtyDrinkAddIn" [(ngModel)]="newDirtyDrinkAddIn.addIn.id" class="col-auto">
+            <option value="{{addIn.id}}" *ngFor="let addIn of addIns">{{addIn.name}}</option>
+          </select>
+          <input type="number" name="amount" [(ngModel)]="newDirtyDrinkAddIn.amount" placeholder="Amount" class="form-control col">
+          <input type="text" name="amountUnit" [(ngModel)]="newDirtyDrinkAddIn.amountUnit" placeholder="Amount Unit" class="form-control col">
+          <button class="btn btn-outline-success" (click)="addDirtyDrinkAddIn(newDirtyDrinkAddIn)">Add In</button>
+        </div>
+      </form>
+    </div>
+
+
+    <button class="btn btn-outline-danger" (click)="displayTable()">Back to List</button>
+    <button class="btn btn-outline-success" (click)="updateDrink(editDrink)">Save</button>
+
+   </form>
 </div>

@@ -28,5 +28,33 @@ export class DirtyDrinkService {
     );
   }
 
+  retrieve(drinkId: number): Observable<DirtyDrink> {
+    return this.http.get<DirtyDrink>(`${this.url}/${drinkId}`).pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError(
+          () =>
+            new Error(
+              "DirtyDrinkService.retrieve(): error retrieving drink: " + err
+            )
+        );
+      })
+    );
+  }
+
+  create(newDrink: DirtyDrink): Observable<DirtyDrink> {
+    return this.http.post<DirtyDrink>(this.url, newDrink).pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError(
+          () =>
+            new Error(
+              "DirtyDrinkService.create(): error creating drink: " + err
+            )
+        );
+      })
+    );
+  }
+
 
 }

@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.skilldistillery.dirtysoda.entities.DirtyDrink;
-import com.skilldistillery.dirtysoda.services.DirtyDrinkService;
+import com.skilldistillery.dirtysoda.entities.DirtyDrinkAddIn;
+import com.skilldistillery.dirtysoda.services.DirtyDrinkAddInService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,73 +21,72 @@ import jakarta.servlet.http.HttpServletResponse;
 @CrossOrigin({"*", "http://localhost/"})
 @RestController
 @RequestMapping("api")
-public class DirtyDrinkController {
+public class DirtyDrinkAddInController {
 	
 	@Autowired
-	private DirtyDrinkService drinkService;
+	private DirtyDrinkAddInService drinkAddInService;
 	
-	@GetMapping("dirtyDrinks")
-	public List<DirtyDrink> listDrinks() {
-		return drinkService.findAll();
-	}
-	
-	@GetMapping("dirtyDrinks/{drinkId}")
-	public DirtyDrink getDrink(
-			@PathVariable("drinkId") Integer drinkId,
+	@GetMapping("dirtyDrinks/{drinkId}/addIns")
+	public List<DirtyDrinkAddIn> listDrinkAddins(
+			@PathVariable("drinkId") int drinkId,
 			HttpServletResponse res
 	) {
-		DirtyDrink drink = drinkService.findById(drinkId);
-		if (drink == null) {
-			res.setStatus(404);
-		}
-		return drink;
+		 List<DirtyDrinkAddIn> addIns = drinkAddInService.findByDrinkId(drinkId);
+		 if (addIns == null) {
+			 res.setStatus(404);
+		 }
+		 return addIns;
 	}
 	
-	@PostMapping("dirtyDrinks")
-	public DirtyDrink addDrink(
-			@RequestBody DirtyDrink drink,
+	@PostMapping("dirtyDrinks/{drinkId}/addIns/{addInId}")
+	public DirtyDrinkAddIn addDrink(
+			@PathVariable("drinkId") Integer drinkId,
+			@PathVariable("addInId") Integer addInId,
+			@RequestBody DirtyDrinkAddIn drinkAddIn,
 			HttpServletRequest req,
 			HttpServletResponse res
 	) {
 		try {
-			drink = drinkService.create(drink);
+			drinkAddIn = drinkAddInService.create(drinkId, addInId, drinkAddIn);
 			res.setStatus(201);
-			res.setHeader("Location", req.getRequestURL().append("/").append(drink.getId()).toString());;
+			res.setHeader("Location", req.getRequestURL().append("/").append(drinkAddIn.getId()).toString());;
 		} catch (Exception e) {
 			e.printStackTrace();
 			res.setStatus(400);
-			drink = null;
+			drinkAddIn = null;
 		}
-		return drink;
+		return drinkAddIn;
 	}
 	
-	@PutMapping("dirtyDrinks/{drinkId}")
-	public DirtyDrink updateDrink(
+	@PutMapping("dirtyDrinks/{drinkId}/addIns/{addInId}")
+	public DirtyDrinkAddIn updateDrink(
 			@PathVariable("drinkId") Integer drinkId,
-			@RequestBody DirtyDrink drink,
+			@PathVariable("addInId") Integer addInId,
+			@RequestBody DirtyDrinkAddIn drinkAddIn,
 			HttpServletRequest req,
 			HttpServletResponse res
 			) {
 		try {
-			drink = drinkService.update(drinkId, drink);
-			if (drink == null) {
+			drinkAddIn = drinkAddInService.update(drinkId, addInId, drinkAddIn);
+			if (drinkAddIn == null) {
 				res.setStatus(404);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			res.setStatus(400);
-			drink = null;
+			drinkAddIn = null;
 		}
-		return drink;
+		return drinkAddIn;
 	}
 	
-	@DeleteMapping("dirtyDrinks/{drinkId}")
+	@GetMapping("dirtyDrinks/{drinkId}/addIns/{addInId}")
 	public void deleteDrink(
 			@PathVariable("drinkId") Integer drinkId,
+			@PathVariable("addInId") Integer addInId,
 			HttpServletResponse res
 	) {
 		try {
-			if (drinkService.deleteById(drinkId)) {
+			if (drinkAddInService.deleteById(drinkId, addInId)) {
 				res.setStatus(204);
 			}
 			else {

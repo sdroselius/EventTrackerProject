@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.skilldistillery.dirtysoda.entities.DirtyDrink;
-import com.skilldistillery.dirtysoda.services.DirtyDrinkService;
+import com.skilldistillery.dirtysoda.entities.BaseDrink;
+import com.skilldistillery.dirtysoda.services.BaseDrinkService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,31 +22,31 @@ import jakarta.servlet.http.HttpServletResponse;
 @CrossOrigin({"*", "http://localhost/"})
 @RestController
 @RequestMapping("api")
-public class DirtyDrinkController {
+public class BaseDrinkController {
 	
 	@Autowired
-	private DirtyDrinkService drinkService;
+	private BaseDrinkService drinkService;
 	
-	@GetMapping("dirtyDrinks")
-	public List<DirtyDrink> listDrinks() {
+	@GetMapping("baseDrinks")
+	public List<BaseDrink> listDrinks() {
 		return drinkService.findAll();
 	}
 	
-	@GetMapping("dirtyDrinks/{drinkId}")
-	public DirtyDrink getDrink(
+	@GetMapping("baseDrinks/{drinkId}")
+	public BaseDrink getDrink(
 			@PathVariable("drinkId") Integer drinkId,
 			HttpServletResponse res
 	) {
-		DirtyDrink drink = drinkService.findById(drinkId);
+		BaseDrink drink = drinkService.findById(drinkId);
 		if (drink == null) {
 			res.setStatus(404);
 		}
 		return drink;
 	}
 	
-	@PostMapping("dirtyDrinks")
-	public DirtyDrink addDrink(
-			@RequestBody DirtyDrink drink,
+	@PostMapping("baseDrinks")
+	public BaseDrink addDrink(
+			@RequestBody BaseDrink drink,
 			HttpServletRequest req,
 			HttpServletResponse res
 	) {
@@ -62,10 +62,10 @@ public class DirtyDrinkController {
 		return drink;
 	}
 	
-	@PutMapping("dirtyDrinks/{drinkId}")
-	public DirtyDrink updateDrink(
+	@PutMapping("baseDrinks/{drinkId}")
+	public BaseDrink updateDrink(
 			@PathVariable("drinkId") Integer drinkId,
-			@RequestBody DirtyDrink drink,
+			@RequestBody BaseDrink drink,
 			HttpServletRequest req,
 			HttpServletResponse res
 			) {
@@ -82,7 +82,7 @@ public class DirtyDrinkController {
 		return drink;
 	}
 	
-	@DeleteMapping("dirtyDrinks/{drinkId}")
+	@DeleteMapping("baseDrinks/{drinkId}")
 	public void deleteDrink(
 			@PathVariable("drinkId") Integer drinkId,
 			HttpServletResponse res
