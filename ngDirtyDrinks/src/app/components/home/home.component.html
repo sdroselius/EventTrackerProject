@@ -101,11 +101,11 @@
                 <div class="row">
                   <input type="number" name="amount" [(ngModel)]="addIn.amount" class="form-control col">
                   <input type="text" name="amountUnit" [(ngModel)]="addIn.amountUnit" class="form-control col">
-                  <button class="btn btn-outline-success col-auto">Update Add In</button>
+                  <button class="btn btn-outline-success col-auto" (click)="addDirtyDrinkAddIn(addIn)">Update Add In</button>
                 </div>
               </form>
             </td>
-            <td><button class="btn btn-danger" (click)="removeDirtyDrinkAddIn(addIn)">X</button></td>
+            <td><button class="btn btn-danger" (click)="removeDirtyDrinkAddIn(editDrink.id, addIn.addIn.id)">X</button></td>
           </tr>
         </tbody>
       </table>
@@ -115,11 +115,11 @@
         <div class="row">
           <input type="hidden" name="id" [(ngModel)]="newDirtyDrinkAddIn.dirtyDrink.id">
           <select name="dirtyDrinkAddIn" [(ngModel)]="newDirtyDrinkAddIn.addIn.id" class="col-auto">
-            <option value="{{addIn.id}}" *ngFor="let addIn of addIns">{{addIn.name}}</option>
+            <option value="{{addIn.id}}" *ngFor="let addIn of addIns | usedAddIns: editDrink">{{addIn.name}}</option>
           </select>
           <input type="number" name="amount" [(ngModel)]="newDirtyDrinkAddIn.amount" placeholder="Amount" class="form-control col">
           <input type="text" name="amountUnit" [(ngModel)]="newDirtyDrinkAddIn.amountUnit" placeholder="Amount Unit" class="form-control col">
-          <button class="btn btn-outline-success" (click)="addDirtyDrinkAddIn(newDirtyDrinkAddIn)">Add In</button>
+          <button class="btn btn-outline-success">Add In</button>
         </div>
       </form>
     </div>

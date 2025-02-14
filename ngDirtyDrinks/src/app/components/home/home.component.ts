@@ -9,13 +9,15 @@ import { AddInService } from '../../services/add-in.service';
 import { BaseDrinkService } from '../../services/base-drink.service';
 import { DirtyDrinkAddIn } from '../../models/dirty-drink-add-in';
 import { DirtyDrinkAddInService } from '../../services/dirty-drink-add-in.service';
+import { UsedAddInsPipe } from "../../pipes/used-add-ins.pipe";
 
 @Component({
   selector: 'app-home',
   imports: [
     CommonModule,
     FormsModule,
-  ],
+    UsedAddInsPipe
+],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -108,30 +110,83 @@ export class HomeComponent implements OnInit {
 
   updateDrink(drink: DirtyDrink) {
     console.log(drink);
-    //TODO
-    //TODO re-retrieve drink after updating
+    this.dirtyDrinkService.update(drink.id, drink).subscribe({
+      next: (updatedDrink) => {
+        this.loadDirtyDrinks();
+        this.selectedDrink = updatedDrink;
+        this.editDrink = updatedDrink;
+      },
+      error: (fail) => {
+        console.error('HomeComponent.updatedDrink: error updating');
+        console.error(fail);
+      }
+    });
   }
 
   deleteDrink(drinkId: number) {
     console.log(drinkId);
-    //TODO
-    //TODO re-retrieve drink after updating
-  }
+    this.dirtyDrinkService.delete(drinkId).subscribe({
+      next: (updatedDrink) => {
+        this.loadDirtyDrinks();
+        this.selectedDrink = null;
+        this.editDrink = null;
+      },
+      error: (fail) => {
+        console.error('HomeComponent.updatedDrink: error updating');
+        console.error(fail);
+      }
+    });
+   }
+
+   refreshEditDrink(drinkId: number) {
+    this.dirtyDrinkService.retrieve(drinkId).subscribe({
+      next: (updatedDrink) => {
+        this.loadDirtyDrinks();
+        this.selectedDrink = updatedDrink;
+        this.editDrink = updatedDrink;
+      },
+      error: (fail) => {
+        console.error('HomeComponent.updatedDrink: error updating');
+        console.error(fail);
+      }
+    });
+   }
 
   addDirtyDrinkAddIn(ddAddIn: DirtyDrinkAddIn) {
-    //TODO
-    //TODO re-retrieve drink after adding
+    this.dirtyDrinkAddInService.addToDirtyDrink(this.editDrink!.id, ddAddIn.addIn.id, ddAddIn).subscribe({
+      next: (addedAddin) => {
+        this.refreshEditDrink(addedAddin.dirtyDrink.id);
+      },
+      error: (fail) => {
+        console.error('HomeComponent.addDirtyDrinkAddIn: error adding addin');
+        console.error(fail);
+      }
+    });
   }
 
   updateDirtyDrinkAddIn(ddAddIn: DirtyDrinkAddIn) {
-    //TODO
-    //TODO re-retrieve drink after updating
+    this.dirtyDrinkAddInService.update(ddAddIn.dirtyDrink.id, ddAddIn.addIn.id, ddAddIn).subscribe({
+      next: (addedAddin) => {
+        this.refreshEditDrink(ddAddIn.dirtyDrink.id);
+      },
+      error: (fail) => {
+        console.error('HomeComponent.updateDirtyDrinkAddIn: error updating addin');
+        console.error(fail);
+      }
+    });
   }
 
 
-  removeDirtyDrinkAddIn(ddAddIn: DirtyDrinkAddIn) {
-    //TODO
-    //TODO re-retrieve drink after removing
+  removeDirtyDrinkAddIn(drinkId: number, addInId: number) {
+    this.dirtyDrinkAddInService.removeFromDirtyDrink(drinkId, addInId).subscribe({
+      next: () => {
+        this.refreshEditDrink(this.editDrink!.id);
+      },
+      error: (fail) => {
+        console.error('HomeComponent.removeDirtyDrinkAddIn: error removing addin');
+        console.error(fail);
+      }
+    });
   }
 }
 

@@ -46,19 +46,29 @@ public class DirtyDrinkAddInServiceImpl implements DirtyDrinkAddInService {
 			newDrinkAddIn.setDirtyDrink(drink);
 			return dirtyDrinkAddInRepo.saveAndFlush(newDrinkAddIn);
 		}
-		return null;
+		return newDrinkAddIn;
 	}
 
 	@Override
 	public DirtyDrinkAddIn update(int drinkId, int addInId,  DirtyDrinkAddIn drinkAddIn) {
-		// TODO Auto-generated method stub
-		return null;
+		DirtyDrinkAddIn managedAddIn = dirtyDrinkAddInRepo.findByDirtyDrinkIdAndAddInId(drinkId, addInId);
+		if (managedAddIn != null) {
+			managedAddIn.setAmount(drinkAddIn.getAmount());
+			managedAddIn.setAmountUnit(drinkAddIn.getAmountUnit());
+			if (drinkAddIn.getAddIn() != null) {
+				managedAddIn.setAddIn(drinkAddIn.getAddIn());
+			}
+			dirtyDrinkAddInRepo.saveAndFlush(managedAddIn);
+		}
+		return managedAddIn;
 	}
 
 	@Override
 	public boolean deleteById(int drinkId, int addInId) {
 		boolean deleted = false;
+		System.out.println("++++++ " + drinkId + " " + addInId);
 		if (dirtyDrinkAddInRepo.existsByDirtyDrinkIdAndAddInId(drinkId, addInId)) {
+			System.out.println("++++++ " + drinkId + " " + addInId);
 			dirtyDrinkAddInRepo.deleteByDirtyDrinkIdAndAddInId(drinkId, addInId);
 			deleted = true;
 		}

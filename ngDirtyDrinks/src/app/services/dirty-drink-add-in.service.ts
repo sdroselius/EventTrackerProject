@@ -44,8 +44,8 @@ export class DirtyDrinkAddInService {
       );
     }
 
-    removeFromDirtyDrink(drinkId: number, addInId: number, ddAddIn: DirtyDrinkAddIn): Observable<void> {
-      return this.http.post<void>(`${this.url}/${drinkId}/addIns/${addInId}`,ddAddIn).pipe(
+    removeFromDirtyDrink(drinkId: number, addInId: number): Observable<void> {
+      return this.http.delete<void>(`${this.url}/${drinkId}/addIns/${addInId}`).pipe(
         catchError((err: any) => {
           console.log(err);
           return throwError(

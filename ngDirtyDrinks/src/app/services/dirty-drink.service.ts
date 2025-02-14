@@ -56,5 +56,33 @@ export class DirtyDrinkService {
     );
   }
 
+  update(drinkId: number, updatingDrink: DirtyDrink): Observable<DirtyDrink> {
+    return this.http.put<DirtyDrink>(`${this.url}/${drinkId}`, updatingDrink).pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError(
+          () =>
+            new Error(
+              "DirtyDrinkService.update(): error updating drink: " + err
+            )
+        );
+      })
+    );
+  }
+
+  delete(drinkId: number): Observable<void> {
+    return this.http.delete<void>(`${this.url}/${drinkId}`).pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError(
+          () =>
+            new Error(
+              "DirtyDrinkService.update(): error deleting drink: " + err
+            )
+        );
+      })
+    );
+  }
+
 
 }

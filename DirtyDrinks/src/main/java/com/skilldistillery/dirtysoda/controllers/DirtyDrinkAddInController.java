@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -79,7 +80,7 @@ public class DirtyDrinkAddInController {
 		return drinkAddIn;
 	}
 	
-	@GetMapping("dirtyDrinks/{drinkId}/addIns/{addInId}")
+	@DeleteMapping("dirtyDrinks/{drinkId}/addIns/{addInId}")
 	public void deleteDrink(
 			@PathVariable("drinkId") Integer drinkId,
 			@PathVariable("addInId") Integer addInId,
