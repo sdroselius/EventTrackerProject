@@ -12,11 +12,11 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-class DiveTest {
+class DestinationTest {
 
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private Dive dive;
+	private Destination dest;
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -31,28 +31,19 @@ class DiveTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		dive = em.find(Dive.class, 1);
+		dest = em.find(Destination.class, 1);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 		em.close();
-		dive = null;
+		dest = null;
 	}
 
 	@Test
-	void test_Dive_entity_mapping() {
-		assertNotNull(dive);
-		assertEquals(2001, dive.getDiveDate().getYear());
+	void test_Destination_entity_mapping() {
+		assertNotNull(dest);
+		assertEquals("Cozumel", dest.getName());
 	}
-	
-	@Test
-	void test_Dive_User_ManyToOne_mapping() {
-		assertNotNull(dive);
-		assertNotNull(dive.getUser());
-		assertEquals("diverdan", dive.getUser().getUsername());
-	}
-	
-	
 
 }

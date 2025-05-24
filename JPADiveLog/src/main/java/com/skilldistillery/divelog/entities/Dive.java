@@ -1,14 +1,20 @@
 package com.skilldistillery.divelog.entities;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Objects;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Dive {
@@ -26,10 +32,27 @@ public class Dive {
 	@Column(name = "decompress_minutes")
 	private Integer decompressMinutes;
 	private String notes;
+	@Column(name = "wildlife_seen")
+	private String wildlifeSeen;
 	@Column(name = "maximum_depth_meters")
 	private Integer maximumDepthMeters;
 	@Column(name = "weight_kilograms")
 	private Double weightKilograms;
+	
+	@CreationTimestamp
+	@Column(name = "create_date")
+	private LocalDateTime createDate;
+	@UpdateTimestamp
+	@Column(name = "last_update")
+	private LocalDateTime lastUpdate;
+
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
+	
+	@ManyToOne
+	@JoinColumn(name = "dive_site_id")
+	private DiveSite diveSite;
 
 	public Dive() {
 		super();
@@ -97,6 +120,46 @@ public class Dive {
 
 	public void setWeightKilograms(Double weightKilograms) {
 		this.weightKilograms = weightKilograms;
+	}
+
+	public String getWildlifeSeen() {
+		return wildlifeSeen;
+	}
+
+	public void setWildlifeSeen(String wildlifeSeen) {
+		this.wildlifeSeen = wildlifeSeen;
+	}
+
+	public LocalDateTime getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(LocalDateTime createDate) {
+		this.createDate = createDate;
+	}
+
+	public LocalDateTime getLastUpdate() {
+		return lastUpdate;
+	}
+
+	public void setLastUpdate(LocalDateTime lastUpdate) {
+		this.lastUpdate = lastUpdate;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public DiveSite getDiveSite() {
+		return diveSite;
+	}
+
+	public void setDiveSite(DiveSite diveSite) {
+		this.diveSite = diveSite;
 	}
 
 	@Override
