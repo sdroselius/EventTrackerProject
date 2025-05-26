@@ -62,6 +62,10 @@ Sprint `RestController` request mappings provide the HTTP API endpoints.
 
 ### Challenges and Lessons Learned
 
+* Testing each entity, and each entity relationship, is essential.
+* Controller logic MUST set appropriate HTTP status codes.
+* Service-layer logic is the gatekeeper for the all-important data.
+
 ## Dynamic HTML and JavaScript Front End
 
 * Coming Soon
