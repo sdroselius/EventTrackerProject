@@ -17,8 +17,8 @@ I created an online, multi-user SCUBA dive log application.  Users can enter div
 
 ### Stretch goals
 * As a user I can search dive sites by destination.
-* As a logged-in user I can view dive log entries for a dive site.
-* As a logged-in user I can view destinations by country.
+* As a user I can view dive log entries for a dive site.
+* As a user I can view destinations by country.
 * As a logged-in user I can view all my log entries on a map.
 * As a logged-in user I can add photos to a dive log entry.
 * As a user I can click on a log entry in the map to see the log details.

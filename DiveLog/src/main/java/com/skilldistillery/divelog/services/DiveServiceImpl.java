@@ -28,6 +28,14 @@ public class DiveServiceImpl implements DiveService {
 	}
 
 	@Override
+	public List<Dive> getUserDives(String username) {
+		if (! userRepo.existsByUsername(username) ) {
+			return null;
+		}
+		return diveRepo.findByUser_Username(username);
+	}
+	
+	@Override
 	public Dive getDive(int diveId) {
 		return diveRepo.findById(diveId).orElse(null);
 	}
