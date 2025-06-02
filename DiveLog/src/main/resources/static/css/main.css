@@ -1,0 +1,23 @@
+body {
+	background-color: #99ffff;
+}
+
+.table th, .table td {
+	background-color: #99ffff;
+	
+}
+.destThumbnail {
+	height: 5vh;
+}
+
+.destImage {
+	height: 40vh;
+}
+
+.destDescription {
+	white-space: pre-line;
+}
+
+.diveSiteMap {
+/* 	height: 60%; */
+}

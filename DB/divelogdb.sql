@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `dive_site` (
   `name` VARCHAR(100) NULL,
   `description` TEXT NULL,
   `latitude` DOUBLE NULL,
-  `longitude` VARCHAR(45) NULL,
+  `longitude` DOUBLE NULL,
   `destination_id` INT NOT NULL,
   `create_date` DATETIME NULL,
   `last_update` DATETIME NULL,
@@ -136,7 +136,8 @@ CREATE TABLE IF NOT EXISTS `dive` (
     REFERENCES `user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 SET SQL_MODE = '';
 DROP USER IF EXISTS glubglub@localhost;
@@ -167,10 +168,10 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `divelogdb`;
-INSERT INTO `destination` (`id`, `name`, `description`, `image_url`, `country_country_code`) VALUES (1, 'Cozumel', NULL, 'https://www.islandlifemexico.com/wp-content/uploads/2022/04/Cozumel-Map.png', 'mx');
-INSERT INTO `destination` (`id`, `name`, `description`, `image_url`, `country_country_code`) VALUES (2, 'Nassau', NULL, 'https://stuartcove.com/wp-content/uploads/2020/04/divebahamas.jpg', 'bs');
-INSERT INTO `destination` (`id`, `name`, `description`, `image_url`, `country_country_code`) VALUES (3, 'Lighthouse Reef', NULL, 'https://upload.wikimedia.org/wikipedia/commons/6/61/Great_Blue_Hole.jpg', 'bz');
-INSERT INTO `destination` (`id`, `name`, `description`, `image_url`, `country_country_code`) VALUES (4, 'Islas de Bahia', NULL, 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Guanaja_Honduras.jpg/500px-Guanaja_Honduras.jpg', 'hn');
+INSERT INTO `destination` (`id`, `name`, `description`, `image_url`, `country_country_code`) VALUES (1, 'Cozumel', 'Cozumel is an island and municipality in the Caribbean Sea off the eastern coast of Mexico\'s Yucatán Peninsula, opposite Playa del Carmen. It is separated from the mainland by the Cozumel Channel and is close to the Yucatán Channel. The municipality is part of the state of Quintana Roo, Mexico.\n\nScuba diving is one of Cozumel\'s primary attractions, mainly due to the coral reef on the western shore of Cozumel. These coral reefs are protected from the open ocean by the island\'s natural geography. ', 'https://www.islandlifemexico.com/wp-content/uploads/2022/04/Cozumel-Map.png', 'mx');
+INSERT INTO `destination` (`id`, `name`, `description`, `image_url`, `country_country_code`) VALUES (2, 'Nassau', 'New Providence is the most populous island in The Bahamas, containing more than 70% of the total population. On the eastern side of the island is the national capital city of Nassau. Nearly three quarters of The Bahamas\'s population lives in New Providence.', 'https://stuartcove.com/wp-content/uploads/2020/04/divebahamas.jpg', 'bs');
+INSERT INTO `destination` (`id`, `name`, `description`, `image_url`, `country_country_code`) VALUES (3, 'Lighthouse Reef', 'Lighthouse Reef is an atoll in the Caribbean Sea, the easternmost part of the Belize Barrier Reef and one of its three atolls, the other two being Turneffe Atoll and Glover\'s Reef.\n\nThe reef is one of the best developed and healthiest reefs in the Caribbean, \"with an emergent fringing reef, a sloping fore reef with a coral rimmed shelf edge, vertical coral walls, and numerous patch reefs in the shallow central lagoon.\"\n\nLighthouse Reef is known as a snorkelling and diving destination, considered one of the best dive sites in Belize and the whole Caribbean. Notable diving locations are Half Moon Caye Wall, Long Caye Aquarium (\"The Aquarium\"), Silver Caves, Tres Cocos, and West Point. In addition to these coral reefs, it is also home to the Great Blue Hole.', 'https://upload.wikimedia.org/wikipedia/commons/6/61/Great_Blue_Hole.jpg', 'bz');
+INSERT INTO `destination` (`id`, `name`, `description`, `image_url`, `country_country_code`) VALUES (4, 'Islas de Bahia', 'The Bay Islands (Spanish: Islas de la Bahía) is a group of islands off the Caribbean coast of Honduras. Collectively, the islands form one of the 18 departments of Honduras. The departmental capital is Coxen Hole, on the island of Roatán.\n\nThe Bay Islands serve \"as the major anchor site for Honduras\'s growing tourism industry, accounting for approximately 28% of all tourism arrivals.\"\n\nIslander men frequently join on with the merchant marine or work on international cruise ships for several months of the year. This low-key existence began to change starting in the late 1960s, when tourists discovered the islands’ reefs, beaches, and funky culture.', 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Guanaja_Honduras.jpg/500px-Guanaja_Honduras.jpg', 'hn');
 
 COMMIT;
 
@@ -192,14 +193,14 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `divelogdb`;
-INSERT INTO `dive_site` (`id`, `name`, `description`, `latitude`, `longitude`, `destination_id`, `create_date`, `last_update`, `added_by_id`) VALUES (1, 'Great Blue Hole', 'Deep reef sinkhole', 17.315278, '-87.026111', 3, '2025-05-05', '2025-05-05', 1);
-INSERT INTO `dive_site` (`id`, `name`, `description`, `latitude`, `longitude`, `destination_id`, `create_date`, `last_update`, `added_by_id`) VALUES (2, 'Palancar Reef', NULL, 20.343889, '-87.026111', 1, '2025-05-05', '2025-05-05', 1);
-INSERT INTO `dive_site` (`id`, `name`, `description`, `latitude`, `longitude`, `destination_id`, `create_date`, `last_update`, `added_by_id`) VALUES (3, 'Shark Arena', 'Shark cages and bait', 24.958634, '-77.527732', 2, '2025-05-05', '2025-05-05', 2);
-INSERT INTO `dive_site` (`id`, `name`, `description`, `latitude`, `longitude`, `destination_id`, `create_date`, `last_update`, `added_by_id`) VALUES (4, 'James Bond Wrecks', 'Movie sets from Thunderball', 25.005915, '-77.556090', 2, '2025-05-05', '2025-05-05', 2);
-INSERT INTO `dive_site` (`id`, `name`, `description`, `latitude`, `longitude`, `destination_id`, `create_date`, `last_update`, `added_by_id`) VALUES (5, 'Palancar Caves', 'Reef wall with swim-throughs', 20.322743, '-87.041980', 1, '2025-05-05', '2025-05-05', 2);
-INSERT INTO `dive_site` (`id`, `name`, `description`, `latitude`, `longitude`, `destination_id`, `create_date`, `last_update`, `added_by_id`) VALUES (6, 'Palancar Gardens', 'Drift over sandy reef', 20.3323808, '-87.024476', 1, '2025-05-05', '2025-05-05', 2);
-INSERT INTO `dive_site` (`id`, `name`, `description`, `latitude`, `longitude`, `destination_id`, `create_date`, `last_update`, `added_by_id`) VALUES (7, 'Bayman Bay Drop', 'Deep wall', 16.470808, '-85.925476', 4, '2025-05-05', '2025-05-05', 2);
-INSERT INTO `dive_site` (`id`, `name`, `description`, `latitude`, `longitude`, `destination_id`, `create_date`, `last_update`, `added_by_id`) VALUES (8, 'Jado Trader', 'Wreck dive', 16.407409, '-85.876753\n\n', 4, '2025-05-05', '2025-05-05', 2);
+INSERT INTO `dive_site` (`id`, `name`, `description`, `latitude`, `longitude`, `destination_id`, `create_date`, `last_update`, `added_by_id`) VALUES (1, 'Great Blue Hole', 'Deep reef sinkhole', 17.315278, -87.026111, 3, '2025-05-05', '2025-05-05', 1);
+INSERT INTO `dive_site` (`id`, `name`, `description`, `latitude`, `longitude`, `destination_id`, `create_date`, `last_update`, `added_by_id`) VALUES (2, 'Palancar Reef', NULL, 20.343889, -87.026111, 1, '2025-05-05', '2025-05-05', 1);
+INSERT INTO `dive_site` (`id`, `name`, `description`, `latitude`, `longitude`, `destination_id`, `create_date`, `last_update`, `added_by_id`) VALUES (3, 'Shark Arena', 'Shark cages and bait', 24.958634, -77.527732, 2, '2025-05-05', '2025-05-05', 2);
+INSERT INTO `dive_site` (`id`, `name`, `description`, `latitude`, `longitude`, `destination_id`, `create_date`, `last_update`, `added_by_id`) VALUES (4, 'James Bond Wrecks', 'Movie sets from Thunderball', 25.005915, -77.556090, 2, '2025-05-05', '2025-05-05', 2);
+INSERT INTO `dive_site` (`id`, `name`, `description`, `latitude`, `longitude`, `destination_id`, `create_date`, `last_update`, `added_by_id`) VALUES (5, 'Palancar Caves', 'Reef wall with swim-throughs', 20.322743, -87.041980, 1, '2025-05-05', '2025-05-05', 2);
+INSERT INTO `dive_site` (`id`, `name`, `description`, `latitude`, `longitude`, `destination_id`, `create_date`, `last_update`, `added_by_id`) VALUES (6, 'Palancar Gardens', 'Drift over sandy reef', 20.3323808, -87.024476, 1, '2025-05-05', '2025-05-05', 2);
+INSERT INTO `dive_site` (`id`, `name`, `description`, `latitude`, `longitude`, `destination_id`, `create_date`, `last_update`, `added_by_id`) VALUES (7, 'Bayman Bay Drop', 'Deep wall', 16.470808, -85.925476, 4, '2025-05-05', '2025-05-05', 2);
+INSERT INTO `dive_site` (`id`, `name`, `description`, `latitude`, `longitude`, `destination_id`, `create_date`, `last_update`, `added_by_id`) VALUES (8, 'Jado Trader', 'Wreck dive', 16.407409, -85.876753, 4, '2025-05-05', '2025-05-05', 2);
 
 COMMIT;
 
