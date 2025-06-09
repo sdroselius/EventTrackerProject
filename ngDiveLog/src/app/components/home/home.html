@@ -1,0 +1,44 @@
+
+@if (! showDestinations) {}
+<div id="destination-list">
+<table class="table table-striped">
+  <thead class="table-dark">
+    <tr>
+      <th>Name</th>
+      <th>Country</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (dest of destinations; track dest.id) {
+    <tr (click)="showDestinationDetails(dest)">
+      <td> <img [src]="dest.imageUrl" alt="Destination {{dest.name}} image" class="destination-thumbnail"></td>
+      <td>{{dest.name}}</td>
+    </tr>
+    }
+    @empty {
+      <tr><td colspan="4">No destinations found</td></tr>
+    }
+  </tbody>
+</table>
+</div>
+
+@if (selectedDestination) {
+  <div>
+    <h3>{{selectedDestination.name}}</h3>
+    <button (click)="selectedDestination = null">Show Destinations</button>
+  </div>
+}
+
+@if (selectedSite) {
+  <div>
+    <h3>{{selectedSite.name}}</h3>
+  </div>
+}
+
+@if (showNewSiteForm) {
+  <div>
+    <form>
+
+    </form>
+  </div>
+}
